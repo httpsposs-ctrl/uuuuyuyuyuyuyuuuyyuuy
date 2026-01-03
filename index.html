@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Links - Programming Vibe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Глубокий темный градиент для фона */
+            background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+            position: relative;
+        }
+
+        /* Контейнер для JS-анимации частиц */
+        #tsparticles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0; /* На задний план */
+        }
+
+        /* Стеклянная карточка */
+        .container {
+            /* Более прозрачный и темный фон для контраста */
+            background: rgba(20, 20, 40, 0.5);
+            backdrop-filter: blur(15px); /* Сильное размытие фона под карточкой */
+            -webkit-backdrop-filter: blur(15px); /* Для Safari */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2); /* Светлый блик сверху */
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            width: 90%; /* Адаптивная ширина для мобильных */
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1; /* Поверх частиц */
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px;
+        }
+
+        /* Светящееся кольцо вокруг фото */
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00f260, #0575e6, #b21f1f, #fdbb2d);
+            z-index: -1;
+            animation: spinRing 4s linear infinite;
+            opacity: 0.7;
+            filter: blur(8px);
+        }
+        
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #1a1a2e; /* Темная рамка, чтобы отделить от свечения */
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Подзаголовок в стиле кода */
+        .subtitle {
+            color: #a0a0c0;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace; /* Моноширинный шрифт */
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.07);
+            color: #e0e0ff;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Выравнивание по левому краю */
+        }
+        
+        /* Иконки внутри кнопок */
+        .link-card i {
+            font-size: 20px;
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        /* Цвета иконок при наведении (можно настроить под себя) */
+        .link-card:hover .fa-telegram { color: #0088cc; }
+        .link-card:hover .fa-github { color: #6e5494; }
+        .link-card:hover .fa-stack-overflow { color: #f48024; }
+        .link-card:hover .fa-linkedin { color: #0077b5; }
+
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateX(5px); /* Сдвиг вправо при наведении */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="tsparticles"></div>
+
+    <div class="container">
+        <div class="profile-wrapper">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWF3JTIwcG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" alt="Profile" class="profile-img">
+        </div>
+        
+        <h1>Alex Coder</h1>
+        <p class="subtitle">&lt;Full-Stack Developer /&gt;</p>
+
+        <div class="links">
+            <a href="https://t.me/твой_ник" target="_blank" class="link-card">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://github.com/твой_ник" target="_blank" class="link-card">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+             <a href="https://stackoverflow.com/users/твой_id" target="_blank" class="link-card">
+                <i class="fab fa-stack-overflow"></i> Stack Overflow
+            </a>
+            <a href="https://linkedin.com/in/твой_ник" target="_blank" class="link-card">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="https://твой-сайт.com" target="_blank" class="link-card">
+                <i class="fas fa-globe"></i> Мое портфолио
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    
+    <script>
+        // Инициализация tsParticles
+        (async () => {
+          await tsParticles.load("tsparticles", {
+            fpsLimit: 60, // Ограничение кадров для плавности
+            particles: {
+              // Цвет частиц и линий (светло-голубой/белый)
+              color: { value: "#a0c4ff" },
+              links: {
+                color: "#a0c4ff",
+                distance: 150, // Расстояние, на котором точки соединяются
+                enable: true,
+                opacity: 0.3, // Прозрачность линий
+                width: 1,
+              },
+              move: {
+                enable: true,
+                // Медленная скорость для "дорогого" эффекта
+                speed: 1, 
+                direction: "none",
+                random: false,
+                straight: false,
+                outModes: { default: "bounce" },
+              },
+              number: {
+                density: { enable: true, area: 800 },
+                value: 80, // Количество точек (меньше = быстрее на слабых телефонах)
+              },
+              opacity: { value: 0.5 },
+              shape: { type: "circle" },
+              size: { value: { min: 1, max: 3 } },
+            },
+            // Интерактивность (реакция на мышь/палец)
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: "grab" }, // При наведении линии тянутся к курсору
+                onClick: { enable: true, mode: "push" }, // При клике добавляются новые
+                resize: true,
+              },
+              modes: {
+                grab: { distance: 180, links: { opacity: 0.8 } },
+                push: { quantity: 4 },
+              },
+            },
+            detectRetina: true,
+          });
+        })();
+      </script>
+
+</body>
+</html>
