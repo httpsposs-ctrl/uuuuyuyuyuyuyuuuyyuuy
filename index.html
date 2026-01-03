@@ -3,115 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Links</title>
+    <title>qexoa | Terminal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #0a0a1a; position: relative; }
-        #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff00ff;
+            --bg-dark: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
         
-        .container {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px 25px;
-            border-radius: 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 360px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        body { 
+            height: 100vh; display: flex; justify-content: center; align-items: center; 
+            overflow: hidden; background: var(--bg-dark); color: white;
+        }
+
+        /* Эффект старого монитора */
+        body::before {
+            content: " ";
+            display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10; background-size: 100% 2px, 3px 100%; pointer-events: none;
+        }
+
+        #tsparticles { position: absolute; width: 100%; height: 100%; z-index: 0; }
+
+        .cyber-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--neon-blue);
+            padding: 40px;
+            border-radius: 5px;
             position: relative;
-            z-index: 1;
+            z-index: 5;
+            width: 350px;
+            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
         }
 
-        .profile-wrapper {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 20px;
+        /* Глитч для ника */
+        .glitch {
+            font-size: 42px; font-weight: bold; text-transform: uppercase;
+            position: relative; text-shadow: 0.05em 0 0 var(--neon-pink), -0.025em -0.05em 0 var(--neon-blue);
+            animation: glitch 1s infinite;
         }
 
-        .profile-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00f2ff, #0061ff, #00f2ff);
-            z-index: -1;
-            animation: spin 4s linear infinite;
-            filter: blur(10px);
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 var(--neon-pink), -0.05em -0.025em 0 var(--neon-blue); }
+            14% { text-shadow: 0.05em 0 0 var(--neon-pink), -0.05em -0.025em 0 var(--neon-blue); }
+            15% { text-shadow: -0.05em -0.025em 0 var(--neon-pink), 0.025em 0.035em 0 var(--neon-blue); }
+            49% { text-shadow: -0.05em -0.025em 0 var(--neon-pink), 0.025em 0.035em 0 var(--neon-blue); }
+            50% { text-shadow: 0.025em 0.05em 0 var(--neon-pink), 0.05em 0 0 var(--neon-blue); }
+            99% { text-shadow: 0.025em 0.05em 0 var(--neon-pink), 0.05em 0 0 var(--neon-blue); }
+            100% { text-shadow: -0.025em 0 0 var(--neon-pink), -0.025em -0.025em 0 var(--neon-blue); }
         }
-        
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .profile-img {
+        .avatar-container {
+            width: 120px; height: 120px; margin: 0 auto 20px;
+            border: 3px solid var(--neon-pink);
+            padding: 5px; filter: drop-shadow(0 0 10px var(--neon-pink));
+        }
+
+        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.5) contrast(1.2); }
+
+        .links { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
+
+        .cyber-btn {
+            text-decoration: none; color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 12px; display: flex; align-items: center; gap: 10px;
+            transition: 0.2s; position: relative; overflow: hidden;
+            font-size: 14px; letter-spacing: 2px;
+        }
+
+        .cyber-btn:hover {
+            background: var(--neon-blue); color: black;
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        .cyber-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 3px solid #0a0a1a;
-            object-fit: cover;
-            background: #111;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
         }
 
-        h1 { color: white; font-size: 28px; font-weight: 800; margin-bottom: 5px; }
-        .subtitle { color: #00f2ff; font-size: 13px; font-family: monospace; margin-bottom: 25px; display: block; opacity: 0.8; }
+        .cyber-btn:hover::before { left: 100%; }
 
-        .links { display: flex; flex-direction: column; gap: 12px; }
-
-        .link-card {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 18px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .link-card i { font-size: 20px; width: 25px; color: #00f2ff; }
-
-        .link-card:hover {
-            transform: scale(1.03);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #00f2ff;
-        }
-
-        /* Стиль для главной кнопки */
-        .link-card.primary {
-            background: #0088cc;
-            border: none;
-        }
-        .link-card.primary i { color: white; }
+        .status { font-size: 10px; color: var(--neon-blue); margin-bottom: 20px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
     <div id="tsparticles"></div>
 
-    <div class="container">
-        <div class="profile-wrapper">
+    <div class="cyber-card">
+        <div class="status">SYSTEM STATUS: ONLINE // ACCESS: GRANTED</div>
+        
+        <div class="avatar-container">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
         
-        <h1>qexoa</h1>
-        <span class="subtitle">@qexoa</span>
+        <div class="glitch">qexoa</div>
+        <div class="status" style="margin-top: 5px;">root@terminal:~# _</div>
 
         <div class="links">
-            <a href="https://t.me/qexoa" target="_blank" class="link-card primary">
-                <i class="fab fa-telegram-plane"></i> Написать мне
+            <a href="https://t.me/qexoa" target="_blank" class="cyber-btn">
+                <i class="fab fa-telegram-plane"></i> DIRECT_MESSAGE
             </a>
-            
-            <a href="https://t.me/savvedata" target="_blank" class="link-card">
-                <i class="fas fa-bullhorn"></i> Мой канал
+            <a href="https://t.me/savvedata" target="_blank" class="cyber-btn">
+                <i class="fas fa-database"></i> DATA_STREAM
             </a>
-
-            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
-                <i class="fas fa-robot"></i> SpamBlock Bot
+            <a href="https://t.me/qexoa_bot" target="_blank" class="cyber-btn">
+                <i class="fas fa-robot"></i> SPAM_SHIELD.EXE
             </a>
         </div>
     </div>
@@ -120,16 +125,13 @@
     <script>
         (async () => {
           await tsParticles.load("tsparticles", {
-            fpsLimit: 60,
             particles: {
               color: { value: "#00f2ff" },
-              links: { color: "#00f2ff", distance: 130, enable: true, opacity: 0.1, width: 1 },
-              move: { enable: true, speed: 0.6 },
-              number: { density: { enable: true, area: 800 }, value: 40 },
-              opacity: { value: 0.2 },
-              size: { value: { min: 1, max: 2 } },
-            },
-            detectRetina: true,
+              links: { color: "#00f2ff", distance: 100, enable: true, opacity: 0.2 },
+              move: { enable: true, speed: 2 },
+              number: { value: 80 },
+              size: { value: 1 }
+            }
           });
         })();
     </script>
