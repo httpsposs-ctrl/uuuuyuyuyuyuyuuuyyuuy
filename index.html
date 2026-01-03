@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Profile</title>
+    <title>qexoa | Links</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #0a0a1a; position: relative; }
         #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        
         .container {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 30px;
+            padding: 40px 25px;
             border-radius: 40px;
             text-align: center;
             width: 90%;
@@ -23,12 +24,14 @@
             position: relative;
             z-index: 1;
         }
+
         .profile-wrapper {
             position: relative;
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 25px;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px;
         }
+
         .profile-wrapper::before {
             content: '';
             position: absolute;
@@ -37,56 +40,82 @@
             background: linear-gradient(45deg, #00f2ff, #0061ff, #00f2ff);
             z-index: -1;
             animation: spin 4s linear infinite;
-            filter: blur(12px);
+            filter: blur(10px);
         }
+        
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
         .profile-img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: 50%;
-            border: 4px solid #0a0a1a;
+            border: 3px solid #0a0a1a;
             object-fit: cover;
             background: #111;
         }
-        h1 { color: white; font-size: 32px; font-weight: 800; margin-bottom: 5px; letter-spacing: -1px; }
-        .subtitle { color: #00f2ff; font-size: 14px; font-family: monospace; margin-bottom: 35px; display: block; opacity: 0.8; }
+
+        h1 { color: white; font-size: 28px; font-weight: 800; margin-bottom: 5px; }
+        .subtitle { color: #00f2ff; font-size: 13px; font-family: monospace; margin-bottom: 25px; display: block; opacity: 0.8; }
+
+        .links { display: flex; flex-direction: column; gap: 12px; }
+
         .link-card {
-            background: #0088cc;
+            background: rgba(255, 255, 255, 0.05);
             color: white;
             text-decoration: none;
-            padding: 20px;
-            border-radius: 20px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 800;
-            font-size: 16px;
+            padding: 16px;
+            border-radius: 18px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .link-card i { font-size: 20px; width: 25px; color: #00f2ff; }
+
         .link-card:hover {
-            transform: scale(1.05);
-            background: #00a2ff;
-            box-shadow: 0 0 30px rgba(0, 162, 255, 0.4);
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00f2ff;
         }
+
+        /* Стиль для главной кнопки */
+        .link-card.primary {
+            background: #0088cc;
+            border: none;
+        }
+        .link-card.primary i { color: white; }
     </style>
 </head>
 <body>
+
     <div id="tsparticles"></div>
+
     <div class="container">
         <div class="profile-wrapper">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
+        
         <h1>qexoa</h1>
-        <span class="subtitle"></span>
+        <span class="subtitle">@qexoa</span>
+
         <div class="links">
-            <a href="https://t.me/qexoa" target="_blank" class="link-card">
-                <i class="fab fa-telegram-plane"></i> Telegram
+            <a href="https://t.me/qexoa" target="_blank" class="link-card primary">
+                <i class="fab fa-telegram-plane"></i> Написать мне
+            </a>
+            
+            <a href="https://t.me/savvedata" target="_blank" class="link-card">
+                <i class="fas fa-bullhorn"></i> Мой канал
+            </a>
+
+            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
+                <i class="fas fa-robot"></i> SpamBlock Bot
             </a>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script>
         (async () => {
@@ -94,10 +123,10 @@
             fpsLimit: 60,
             particles: {
               color: { value: "#00f2ff" },
-              links: { color: "#00f2ff", distance: 150, enable: true, opacity: 0.15, width: 1 },
-              move: { enable: true, speed: 0.8 },
-              number: { density: { enable: true, area: 800 }, value: 50 },
-              opacity: { value: 0.3 },
+              links: { color: "#00f2ff", distance: 130, enable: true, opacity: 0.1, width: 1 },
+              move: { enable: true, speed: 0.6 },
+              number: { density: { enable: true, area: 800 }, value: 40 },
+              opacity: { value: 0.2 },
               size: { value: { min: 1, max: 2 } },
             },
             detectRetina: true,
