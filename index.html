@@ -3,99 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Root Access</title>
+    <title>qexoa | System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --neon-green: #0f0;
             --neon-blue: #00f2ff;
             --neon-pink: #ff00ff;
+            --grid-color: rgba(0, 242, 255, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Monaco', monospace; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', monospace; }
         
-        body { background: #000; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body { 
+            background: #000; 
+            overflow: hidden; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            perspective: 1000px;
+        }
 
-        /* Матрица на фоне */
-        canvas#matrix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.2; }
+        /* Анимированный Кибер-фон (Сетка) */
+        .cyber-grid {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateY(0);
+            animation: grid-move 5s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes grid-move {
+            from { transform: rotateX(60deg) translateY(0); }
+            to { transform: rotateX(60deg) translateY(50px); }
+        }
+
+        /* Затемнение для читаемости */
+        .overlay {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, #000 80%);
+            z-index: 1;
+        }
 
         .hacker-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--neon-blue);
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--neon-blue);
             padding: 40px 30px;
-            width: 360px;
+            width: 350px;
             position: relative;
             z-index: 10;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.1);
-            /* Срез угла в стиле киберпанк */
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
+            backdrop-filter: blur(10px);
         }
 
         .avatar-box {
-            width: 110px; height: 110px; margin: 0 auto 20px;
-            border: 2px solid var(--neon-pink);
-            position: relative; padding: 5px;
-            box-shadow: 0 0 15px var(--neon-pink);
+            width: 100px; height: 100px; margin: 0 auto 20px;
+            border: 2px solid var(--neon-blue);
+            padding: 3px;
+            box-shadow: 0 0 15px var(--neon-blue);
         }
-        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.1) contrast(1.1); }
+
+        .profile-img { width: 100%; height: 100%; object-fit: cover; }
 
         h1 { 
-            color: #fff; font-size: 38px; letter-spacing: 3px; 
-            text-transform: uppercase;
-            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-blue);
+            color: #fff; font-size: 34px; letter-spacing: 2px; 
+            text-shadow: 0 0 10px var(--neon-blue);
             margin-bottom: 5px;
         }
         
-        /* Тот самый терминал */
-        .terminal-line { 
-            color: var(--neon-green); 
-            font-size: 13px; 
-            margin-bottom: 30px; 
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .cursor {
-            animation: blink 1s infinite;
-            border-left: 8px solid var(--neon-green);
-            margin-left: 5px;
-        }
+        .terminal-line { color: #0f0; font-size: 13px; margin-bottom: 30px; }
+        .cursor { animation: blink 1s infinite; border-left: 7px solid #0f0; margin-left: 5px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .links { display: flex; flex-direction: column; gap: 15px; }
+        .links { display: flex; flex-direction: column; gap: 12px; }
 
         .btn {
             text-decoration: none; color: #fff;
-            border: 1px solid var(--neon-blue);
-            padding: 15px; display: flex; align-items: center; justify-content: center;
-            gap: 15px; transition: 0.2s; background: rgba(0, 242, 255, 0.05);
-            text-transform: uppercase; font-size: 14px; font-weight: bold;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px; display: flex; align-items: center; justify-content: center;
+            gap: 12px; transition: 0.3s; background: rgba(255, 255, 255, 0.03);
+            text-transform: uppercase; font-size: 13px; letter-spacing: 1px;
         }
 
         .btn:hover {
-            background: var(--neon-blue);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-blue);
-            transform: scale(1.02);
+            border-color: var(--neon-blue);
+            background: rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            transform: translateY(-2px);
         }
 
-        .btn i { font-size: 18px; }
-
-        .system-status {
-            position: absolute; top: 10px; left: 15px;
-            font-size: 9px; color: var(--neon-blue);
-            text-transform: uppercase; opacity: 0.6;
-        }
+        .btn i { color: var(--neon-blue); }
     </style>
 </head>
 <body>
 
-    <canvas id="matrix"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="overlay"></div>
 
     <div class="hacker-card">
-        <div class="system-status">Unauthorized Access Detected</div>
-        
         <div class="avatar-box">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
@@ -116,36 +128,5 @@
         </div>
     </div>
 
-    <script>
-        // МАТРИЦА (Зеленый дождь)
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const letters = "日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#0f0";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 35);
-
-        // Ресайз матрицы при изменении окна
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
 </body>
 </html>
