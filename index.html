@@ -3,118 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Digital Profile</title>
+    <title>qexoa | Lab</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --accent: #00f2ff;
-            --secondary: #0061ff;
-        }
-
+        :root { --accent: #00f2ff; --secondary: #0061ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Segoe UI', sans-serif; }
+        body { height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #020205; position: relative; }
+        #tsparticles { position: absolute; width: 100%; height: 100%; z-index: 0; }
         
-        body { 
-            height: 100vh; display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; background: #05050a; position: relative; 
-        }
-
-        /* Анимированный фон */
-        #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-        
+        /* Карточка с 3D эффектом */
         .container {
             background: rgba(10, 10, 25, 0.85);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 242, 255, 0.2);
             padding: 40px 25px;
-            border-radius: 40px;
+            border-radius: 35px;
             text-align: center;
             width: 95%;
-            max-width: 370px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 242, 255, 0.1);
-            position: relative;
+            max-width: 380px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
             z-index: 1;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
 
-        /* Анимированная обводка аватарки */
-        .profile-wrapper {
-            position: relative;
-            width: 115px;
-            height: 115px;
-            margin: 0 auto 20px;
-            padding: 5px;
+        .profile-wrapper { width: 110px; height: 110px; margin: 0 auto 20px; position: relative; }
+        .profile-img { 
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
+            border: 2px solid var(--accent); transform: translateZ(30px); 
         }
 
-        .profile-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50%;
-            padding: 2px;
-            background: linear-gradient(45deg, var(--accent), transparent, var(--secondary), var(--accent));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
-            animation: rotate 4s linear infinite;
-        }
-        
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        h1 { color: white; font-size: 32px; letter-spacing: 2px; transform: translateZ(50px); }
+        .terminal-static { color: #0f0; font-size: 13px; margin-bottom: 20px; opacity: 0.8; }
 
-        .profile-img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(0, 242, 255, 0.2);
-            background: #111;
-        }
-
-        h1 { color: white; font-size: 30px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        
-        .terminal { color: #0f0; font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.9; }
-        .cursor { animation: blink 1s infinite; border-left: 7px solid #0f0; margin-left: 4px; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .links { display: flex; flex-direction: column; gap: 12px; }
-
+        .links { display: flex; flex-direction: column; gap: 10px; transform: translateZ(20px); }
         .link-card {
-            background: rgba(255, 255, 255, 0.03);
-            color: white;
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 18px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.03); color: white; text-decoration: none;
+            padding: 15px; border-radius: 15px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; font-weight: bold;
         }
+        .link-card:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--accent); }
+        .link-card.primary { background: linear-gradient(45deg, #0088cc, #0061ff); border: none; }
 
-        .link-card i { font-size: 17px; color: var(--accent); }
-
-        .link-card:hover {
-            transform: translateY(-3px);
-            background: rgba(0, 242, 255, 0.08);
-            border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.1);
+        /* ВЫЕЗЖАЮЩАЯ КОНСОЛЬ */
+        .console-trigger { 
+            margin-top: 20px; color: var(--accent); font-size: 10px; 
+            cursor: pointer; opacity: 0.5; letter-spacing: 2px;
         }
+        .console-trigger:hover { opacity: 1; text-shadow: 0 0 10px var(--accent); }
 
-        .link-card.primary {
-            background: linear-gradient(45deg, #0088cc, #0061ff);
-            border: none;
+        #console-box {
+            height: 0; overflow: hidden; transition: 0.5s ease;
+            background: #000; border-radius: 10px; margin-top: 15px;
+            text-align: left; font-size: 12px; color: #0f0; padding: 0 10px;
         }
-        .link-card.primary i { color: white; }
-
-        /* Стиль для новой кнопки анонимок */
-        .link-card.anon {
-            border-color: rgba(255, 0, 255, 0.3);
-        }
-        .link-card.anon i { color: #ff00ff; }
-        .link-card.anon:hover { border-color: #ff00ff; box-shadow: 0 5px 15px rgba(255, 0, 255, 0.15); }
+        #console-box.active { height: 120px; padding: 10px; border: 1px solid #0f0; }
+        #console-input { background: transparent; border: none; color: #0f0; outline: none; width: 70%; font-family: monospace; }
     </style>
 </head>
 <body>
@@ -127,70 +72,69 @@
         </div>
         
         <h1>qexoa</h1>
-        <div class="terminal">root@terminal:~# _<span class="cursor"></span></div>
+        <div class="terminal-static">root@terminal:~# _</div>
 
         <div class="links">
-            <a href="https://t.me/qexoa" target="_blank" class="link-card primary">
-                <i class="fab fa-telegram-plane"></i> Написать мне
-            </a>
-            
-            <a href="https://t.me/savvedata" target="_blank" class="link-card">
-                <i class="fas fa-bullhorn"></i> Мой канал
-            </a>
+            <a href="https://t.me/qexoa" class="link-card primary"><i class="fab fa-telegram-plane"></i> НАПИСАТЬ МНЕ</a>
+            <a href="https://t.me/savvedata" class="link-card"><i class="fas fa-bullhorn"></i> МОЙ КАНАЛ</a>
+            <a href="https://t.me/qexoa_bot" class="link-card"><i class="fas fa-robot"></i> SPAMBLOCK BOT</a>
+            <a href="http://t.me/anonaskbot?start=wrebqmw" class="link-card"><i class="fas fa-user-secret"></i> АНОНИМКИ</a>
+        </div>
 
-            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
-                <i class="fas fa-robot"></i> SpamBlock Bot
-            </a>
-
-            <a href="http://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link-card anon">
-                <i class="fas fa-user-secret"></i> Анонимные сообщения
-            </a>
+        <div class="console-trigger" onclick="toggleConsole()">[ SHOW_SYSTEM_LOG ]</div>
+        
+        <div id="console-box">
+            <div id="log-content">> System initialized...<br>> Waiting for input...</div>
+            <div style="display: flex;">
+                <span>> </span>
+                <input type="text" id="console-input" autofocus autocomplete="off">
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    
     <script>
+        // 3D Tilt
+        VanillaTilt.init(document.querySelector(".container"), { max: 15, speed: 400, glare: true, "max-glare": 0.1 });
+
+        // Фон
         (async () => {
           await tsParticles.load("tsparticles", {
-            fpsLimit: 120,
             particles: {
-              color: { value: ["#00f2ff", "#0061ff"] },
-              links: { 
-                color: "#00f2ff", 
-                distance: 140, 
-                enable: true, 
-                opacity: 0.25, 
-                width: 1 
-              },
-              move: { 
-                enable: true, 
-                speed: 1.5, 
-                direction: "none",
-                random: true,
-                straight: false,
-                outModes: { default: "out" }
-              },
-              number: { 
-                density: { enable: true, area: 800 }, 
-                value: 70 
-              },
-              opacity: {
-                value: { min: 0.1, max: 0.6 },
-                animation: { enable: true, speed: 0.5, sync: false }
-              },
-              size: { value: { min: 1, max: 3 } },
+              color: { value: "#00f2ff" },
+              links: { color: "#00f2ff", distance: 150, enable: true, opacity: 0.2 },
+              move: { enable: true, speed: 1 },
+              number: { value: 60 },
+              size: { value: { min: 1, max: 2 } }
             },
-            interactivity: {
-                events: {
-                    onHover: { enable: true, mode: "grab" }
-                },
-                modes: {
-                    grab: { distance: 200, links: { opacity: 0.5 } }
-                }
-            },
-            detectRetina: true,
+            interactivity: { events: { onHover: { enable: true, mode: "grab" } } }
           });
         })();
+
+        // Логика консоли
+        function toggleConsole() { document.getElementById('console-box').classList.toggle('active'); }
+
+        const input = document.getElementById('console-input');
+        const log = document.getElementById('log-content');
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = input.value.toLowerCase();
+                let res = `> ${cmd}`;
+                
+                if (cmd === 'help') res += '<br>Commands: help, clear, exit, whoami';
+                else if (cmd === 'clear') { log.innerHTML = '> Console cleared.'; input.value = ''; return; }
+                else if (cmd === 'exit') { toggleConsole(); input.value = ''; return; }
+                else if (cmd === 'whoami') res += '<br>User: qexoa | Access: Root';
+                else res += '<br>Unknown command. Try "help"';
+
+                log.innerHTML += `<br>${res}`;
+                input.value = '';
+                document.getElementById('console-box').scrollTop = 1000;
+            }
+        });
     </script>
 </body>
 </html>
