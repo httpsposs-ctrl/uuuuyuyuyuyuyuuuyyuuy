@@ -3,184 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | OVERRIDE</title>
+    <title>qexoa | Digital Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --neon: #00f2ff;
-            --hot-pink: #ff00ff;
+            --accent: #00f2ff;
+            --secondary: #0061ff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', monospace; }
-        body { background: #000; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Segoe UI', sans-serif; }
+        
+        body { 
+            height: 100vh; display: flex; justify-content: center; align-items: center; 
+            overflow: hidden; background: #05050a; position: relative; 
+        }
 
-        /* ФОН: ГИПЕРПРЫЖОК */
-        #starfield { position: absolute; width: 100%; height: 100%; z-index: 0; }
-
-        .hacker-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--neon);
-            padding: 40px;
-            width: 360px;
-            position: relative;
-            z-index: 10;
+        /* Задний фон */
+        #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        
+        /* Основная карточка */
+        .container {
+            background: rgba(10, 10, 25, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 45px 30px;
+            border-radius: 40px;
             text-align: center;
-            animation: card-glitch 4s cubic-bezier(.25, .46, .45, .94) infinite both;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.4);
-        }
-
-        /* АНИМИРОВАННАЯ АВАТАРКА С ГЛИТЧЕМ */
-        .avatar-box {
-            width: 120px; height: 120px; margin: 0 auto 25px;
-            border: 3px solid var(--hot-pink);
+            width: 90%;
+            max-width: 370px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 255, 0.1);
             position: relative;
-            animation: pulse-border 1.5s infinite alternate;
+            z-index: 1;
         }
 
-        .profile-img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            animation: img-glitch 2s infinite linear alternate-reverse;
-        }
-
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 10px var(--hot-pink); transform: scale(1); }
-            100% { box-shadow: 0 0 30px var(--hot-pink), 0 0 50px var(--neon); transform: scale(1.05); }
-        }
-
-        /* ТЕКСТОВЫЕ ЭФФЕКТЫ */
-        h1 { 
-            color: #fff; font-size: 42px; letter-spacing: 4px; font-weight: 900;
-            text-transform: uppercase;
+        /* Анимированная обводка аватарки */
+        .profile-wrapper {
             position: relative;
-            animation: text-shake 0.5s infinite;
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 25px;
+            padding: 5px;
         }
 
-        .terminal-line { color: #0f0; font-size: 14px; margin-bottom: 30px; text-shadow: 0 0 10px #0f0; }
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--accent), transparent, var(--secondary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            animation: rotate 3s linear infinite;
+        }
+        
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
-        /* КНОПКИ */
+        .profile-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 242, 255, 0.3);
+            background: #111;
+        }
+
+        h1 { color: white; font-size: 32px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+        
+        .terminal { color: #0f0; font-size: 14px; margin-bottom: 30px; font-family: monospace; opacity: 0.9; }
+        .cursor { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
         .links { display: flex; flex-direction: column; gap: 15px; }
 
-        .btn {
-            text-decoration: none; color: #fff;
-            border: 1px solid var(--neon);
-            padding: 16px; display: flex; align-items: center; justify-content: center;
-            gap: 12px; transition: 0.1s; background: rgba(0, 242, 255, 0.1);
-            position: relative; overflow: hidden; font-weight: bold;
+        .link-card {
+            background: rgba(255, 255, 255, 0.03);
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            border-radius: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn:hover {
-            background: var(--neon); color: #000;
-            box-shadow: 0 0 40px var(--neon);
-            transform: skewX(-10deg);
+        .link-card i { font-size: 18px; color: var(--accent); }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 242, 255, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.15);
         }
 
-        /* ГЛИТЧ-АНИМАЦИИ */
-        @keyframes card-glitch {
-            0% { transform: translate(0); }
-            1% { transform: translate(-5px, 3px); }
-            2% { transform: translate(5px, -3px); }
-            3% { transform: translate(0); }
-            100% { transform: translate(0); }
+        .link-card.primary {
+            background: linear-gradient(45deg, #0088cc, #0061ff);
+            border: none;
         }
-
-        @keyframes img-glitch {
-            0% { clip-path: inset(10% 0 30% 0); transform: translateX(-5px); }
-            20% { clip-path: inset(40% 0 10% 0); transform: translateX(5px); }
-            40% { clip-path: inset(10% 0 50% 0); transform: translateX(-2px); }
-            60% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
-            100% { clip-path: inset(10% 0 30% 0); transform: translateX(-5px); }
-        }
-
-        @keyframes text-shake {
-            0% { text-shadow: 2px 2px var(--hot-pink); }
-            25% { text-shadow: -2px -2px var(--neon); }
-            50% { text-shadow: 2px -2px var(--hot-pink); transform: translateX(1px); }
-            75% { text-shadow: -2px 2px var(--neon); transform: translateX(-1px); }
-            100% { text-shadow: 2px 2px var(--hot-pink); }
-        }
+        .link-card.primary i { color: white; }
     </style>
 </head>
 <body>
 
-    <canvas id="starfield"></canvas>
+    <div id="tsparticles"></div>
 
-    <div class="hacker-card">
-        <div class="avatar-box">
+    <div class="container">
+        <div class="profile-wrapper">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
         
         <h1>qexoa</h1>
-        <div class="terminal-line">SYSTEM_ERROR: ROOT_ACCESS_GRANTED</div>
+        <div class="terminal">root@terminal:~# _<span class="cursor">|</span></div>
 
         <div class="links">
-            <a href="https://t.me/qexoa" target="_blank" class="btn">
-                <i class="fab fa-telegram-plane"></i> НАПИСАТЬ МНЕ
+            <a href="https://t.me/qexoa" target="_blank" class="link-card primary">
+                <i class="fab fa-telegram-plane"></i> Написать мне
             </a>
-            <a href="https://t.me/savvedata" target="_blank" class="btn">
-                <i class="fas fa-database"></i> МОЙ ТГК
+            
+            <a href="https://t.me/savvedata" target="_blank" class="link-card">
+                <i class="fas fa-bullhorn"></i> Мой канал
             </a>
-            <a href="https://t.me/qexoa_bot" target="_blank" class="btn">
-                <i class="fas fa-robot"></i> SPAMBLOCK BOT
+
+            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
+                <i class="fas fa-robot"></i> SpamBlock Bot
             </a>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script>
-        // СКРИПТ ДЛЯ ФОНА "ГИПЕРПРЫЖОК"
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        const numStars = 500;
-        const speed = 15;
-
-        function initStars() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            stars = [];
-            for (let i = 0; i < numStars; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width - canvas.width / 2,
-                    y: Math.random() * canvas.height - canvas.height / 2,
-                    z: Math.random() * canvas.width
-                });
-            }
-        }
-
-        function drawStars() {
-            ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-
-            for (let i = 0; i < numStars; i++) {
-                let star = stars[i];
-                star.z -= speed;
-                if (star.z <= 0) star.z = canvas.width;
-
-                let sx = star.x / (star.z / canvas.width);
-                let sy = star.y / (star.z / canvas.width);
-                let size = (1 - star.z / canvas.width) * 3;
-
-                ctx.fillStyle = "white";
-                ctx.beginPath();
-                ctx.arc(sx, sy, size, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Рисуем хвост звезды
-                ctx.strokeStyle = "rgba(0, 242, 255, " + (1 - star.z / canvas.width) + ")";
-                ctx.lineWidth = size;
-                ctx.beginPath();
-                ctx.moveTo(sx, sy);
-                ctx.lineTo(sx * 1.1, sy * 1.1);
-                ctx.stroke();
-            }
-            ctx.restore();
-            requestAnimationFrame(drawStars);
-        }
-
-        window.addEventListener('resize', initStars);
-        initStars();
-        drawStars();
+        (async () => {
+          await tsParticles.load("tsparticles", {
+            fpsLimit: 120,
+            particles: {
+              color: { value: "#00f2ff" },
+              links: { 
+                color: "#00f2ff", 
+                distance: 150, 
+                enable: true, 
+                opacity: 0.2, 
+                width: 1 
+              },
+              move: { 
+                enable: true, 
+                speed: 1.2, 
+                direction: "none",
+                outModes: { default: "out" }
+              },
+              number: { 
+                density: { enable: true, area: 800 }, 
+                value: 60 
+              },
+              opacity: {
+                value: { min: 0.1, max: 0.5 },
+                animation: { enable: true, speed: 1, sync: false }
+              },
+              size: { value: { min: 1, max: 3 } },
+            },
+            detectRetina: true,
+          });
+        })();
     </script>
 </body>
 </html>
