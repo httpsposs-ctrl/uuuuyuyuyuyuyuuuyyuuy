@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Underground</title>
+    <title>qexoa | Root Access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -17,62 +17,76 @@
         body { background: #000; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
 
         /* Матрица на фоне */
-        canvas#matrix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.15; }
+        canvas#matrix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.2; }
 
         .hacker-card {
             background: rgba(0, 0, 0, 0.9);
-            border: 1px solid var(--neon-blue);
-            padding: 30px;
+            border: 2px solid var(--neon-blue);
+            padding: 40px 30px;
             width: 360px;
             position: relative;
             z-index: 10;
             text-align: center;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
-            border-radius: 2px;
-        }
-
-        /* Углы для красоты */
-        .hacker-card::before {
-            content: ''; position: absolute; top: -5px; left: -5px; width: 20px; height: 20px;
-            border-top: 2px solid var(--neon-pink); border-left: 2px solid var(--neon-pink);
-        }
-        .hacker-card::after {
-            content: ''; position: absolute; bottom: -5px; right: -5px; width: 20px; height: 20px;
-            border-bottom: 2px solid var(--neon-pink); border-right: 2px solid var(--neon-pink);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.1);
+            /* Срез угла в стиле киберпанк */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
         }
 
         .avatar-box {
-            width: 100px; height: 100px; margin: 0 auto 20px;
-            border: 1px solid var(--neon-blue);
-            position: relative; overflow: hidden;
+            width: 110px; height: 110px; margin: 0 auto 20px;
+            border: 2px solid var(--neon-pink);
+            position: relative; padding: 5px;
+            box-shadow: 0 0 15px var(--neon-pink);
         }
-        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(100%) hue-rotate(150deg) brightness(1.2); }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.1) contrast(1.1); }
 
-        h1 { color: #fff; font-size: 32px; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon-blue); margin-bottom: 10px; }
+        h1 { 
+            color: #fff; font-size: 38px; letter-spacing: 3px; 
+            text-transform: uppercase;
+            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-blue);
+            margin-bottom: 5px;
+        }
         
-        #console-text { color: var(--neon-green); font-size: 12px; margin-bottom: 30px; height: 15px; }
+        /* Тот самый терминал */
+        .terminal-line { 
+            color: var(--neon-green); 
+            font-size: 13px; 
+            margin-bottom: 30px; 
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .cursor {
+            animation: blink 1s infinite;
+            border-left: 8px solid var(--neon-green);
+            margin-left: 5px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .links { display: flex; flex-direction: column; gap: 15px; }
 
         .btn {
             text-decoration: none; color: #fff;
-            border: 1px solid rgba(0, 242, 255, 0.3);
+            border: 1px solid var(--neon-blue);
             padding: 15px; display: flex; align-items: center; justify-content: center;
-            gap: 15px; transition: 0.3s; background: rgba(0, 242, 255, 0.05);
-            text-transform: uppercase; font-size: 14px; letter-spacing: 2px;
+            gap: 15px; transition: 0.2s; background: rgba(0, 242, 255, 0.05);
+            text-transform: uppercase; font-size: 14px; font-weight: bold;
+            letter-spacing: 1px;
         }
 
         .btn:hover {
-            border-color: var(--neon-blue);
-            background: rgba(0, 242, 255, 0.2);
-            box-shadow: 0 0 15px var(--neon-blue);
-            transform: translateY(-2px);
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-blue);
+            transform: scale(1.02);
         }
 
-        .btn i { color: var(--neon-blue); font-size: 18px; }
+        .btn i { font-size: 18px; }
 
-        /* Спец-эффект для кнопок */
-        .btn span::before { content: "> "; color: var(--neon-green); }
+        .system-status {
+            position: absolute; top: 10px; left: 15px;
+            font-size: 9px; color: var(--neon-blue);
+            text-transform: uppercase; opacity: 0.6;
+        }
     </style>
 </head>
 <body>
@@ -80,33 +94,35 @@
     <canvas id="matrix"></canvas>
 
     <div class="hacker-card">
+        <div class="system-status">Unauthorized Access Detected</div>
+        
         <div class="avatar-box">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
         
         <h1>qexoa</h1>
-        <div id="console-text"></div>
+        <div class="terminal-line">root@terminal:~# _<span class="cursor"></span></div>
 
         <div class="links">
             <a href="https://t.me/qexoa" target="_blank" class="btn">
-                <i class="fab fa-telegram-plane"></i> <span>Написать мне</span>
+                <i class="fab fa-telegram-plane"></i> Написать мне
             </a>
             <a href="https://t.me/savvedata" target="_blank" class="btn">
-                <i class="fas fa-database"></i> <span>Мой ТГК</span>
+                <i class="fas fa-database"></i> Мой ТГК
             </a>
             <a href="https://t.me/qexoa_bot" target="_blank" class="btn">
-                <i class="fas fa-shield-virus"></i> <span>SpamBlock Bot</span>
+                <i class="fas fa-robot"></i> SpamBlock Bot
             </a>
         </div>
     </div>
 
     <script>
-        // ЭФФЕКТ МАТРИЦЫ
+        // МАТРИЦА (Зеленый дождь)
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+        const letters = "日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
@@ -123,35 +139,13 @@
                 drops[i]++;
             }
         }
-        setInterval(drawMatrix, 33);
+        setInterval(drawMatrix, 35);
 
-        // ПЕЧАТАЮЩИЙСЯ ТЕКСТ
-        const textElement = document.getElementById('console-text');
-        const phrases = [
-            "> Initializing system...",
-            "> Loading kernel...",
-            "> Connection established.",
-            "> Hello, qexoa.",
-            "> Waiting for commands..."
-        ];
-        let pIndex = 0;
-        let charIndex = 0;
-
-        function type() {
-            if (charIndex < phrases[pIndex].length) {
-                textElement.innerHTML += phrases[pIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, 50);
-            } else {
-                setTimeout(() => {
-                    textElement.innerHTML = "";
-                    charIndex = 0;
-                    pIndex = (pIndex + 1) % phrases.length;
-                    type();
-                }, 2000);
-            }
-        }
-        type();
+        // Ресайз матрицы при изменении окна
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
