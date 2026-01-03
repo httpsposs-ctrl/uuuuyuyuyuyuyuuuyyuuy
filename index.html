@@ -3,137 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Terminal</title>
+    <title>qexoa | Underground</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
+            --neon-green: #0f0;
             --neon-blue: #00f2ff;
             --neon-pink: #ff00ff;
-            --bg-dark: #050505;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Monaco', monospace; }
         
-        body { 
-            height: 100vh; display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; background: var(--bg-dark); color: white;
-        }
+        body { background: #000; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        /* Эффект старого монитора */
-        body::before {
-            content: " ";
-            display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 10; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
+        /* Матрица на фоне */
+        canvas#matrix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.15; }
 
-        #tsparticles { position: absolute; width: 100%; height: 100%; z-index: 0; }
-
-        .cyber-card {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--neon-blue);
-            padding: 40px;
-            border-radius: 5px;
-            position: relative;
-            z-index: 5;
-            width: 350px;
-            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
-        }
-
-        /* Глитч для ника */
-        .glitch {
-            font-size: 42px; font-weight: bold; text-transform: uppercase;
-            position: relative; text-shadow: 0.05em 0 0 var(--neon-pink), -0.025em -0.05em 0 var(--neon-blue);
-            animation: glitch 1s infinite;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 var(--neon-pink), -0.05em -0.025em 0 var(--neon-blue); }
-            14% { text-shadow: 0.05em 0 0 var(--neon-pink), -0.05em -0.025em 0 var(--neon-blue); }
-            15% { text-shadow: -0.05em -0.025em 0 var(--neon-pink), 0.025em 0.035em 0 var(--neon-blue); }
-            49% { text-shadow: -0.05em -0.025em 0 var(--neon-pink), 0.025em 0.035em 0 var(--neon-blue); }
-            50% { text-shadow: 0.025em 0.05em 0 var(--neon-pink), 0.05em 0 0 var(--neon-blue); }
-            99% { text-shadow: 0.025em 0.05em 0 var(--neon-pink), 0.05em 0 0 var(--neon-blue); }
-            100% { text-shadow: -0.025em 0 0 var(--neon-pink), -0.025em -0.025em 0 var(--neon-blue); }
-        }
-
-        .avatar-container {
-            width: 120px; height: 120px; margin: 0 auto 20px;
-            border: 3px solid var(--neon-pink);
-            padding: 5px; filter: drop-shadow(0 0 10px var(--neon-pink));
-        }
-
-        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.5) contrast(1.2); }
-
-        .links { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
-
-        .cyber-btn {
-            text-decoration: none; color: var(--neon-blue);
+        .hacker-card {
+            background: rgba(0, 0, 0, 0.9);
             border: 1px solid var(--neon-blue);
-            padding: 12px; display: flex; align-items: center; gap: 10px;
-            transition: 0.2s; position: relative; overflow: hidden;
-            font-size: 14px; letter-spacing: 2px;
+            padding: 30px;
+            width: 360px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            border-radius: 2px;
         }
 
-        .cyber-btn:hover {
-            background: var(--neon-blue); color: black;
-            box-shadow: 0 0 30px var(--neon-blue);
+        /* Углы для красоты */
+        .hacker-card::before {
+            content: ''; position: absolute; top: -5px; left: -5px; width: 20px; height: 20px;
+            border-top: 2px solid var(--neon-pink); border-left: 2px solid var(--neon-pink);
+        }
+        .hacker-card::after {
+            content: ''; position: absolute; bottom: -5px; right: -5px; width: 20px; height: 20px;
+            border-bottom: 2px solid var(--neon-pink); border-right: 2px solid var(--neon-pink);
         }
 
-        .cyber-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
+        .avatar-box {
+            width: 100px; height: 100px; margin: 0 auto 20px;
+            border: 1px solid var(--neon-blue);
+            position: relative; overflow: hidden;
+        }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(100%) hue-rotate(150deg) brightness(1.2); }
+
+        h1 { color: #fff; font-size: 32px; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon-blue); margin-bottom: 10px; }
+        
+        #console-text { color: var(--neon-green); font-size: 12px; margin-bottom: 30px; height: 15px; }
+
+        .links { display: flex; flex-direction: column; gap: 15px; }
+
+        .btn {
+            text-decoration: none; color: #fff;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            padding: 15px; display: flex; align-items: center; justify-content: center;
+            gap: 15px; transition: 0.3s; background: rgba(0, 242, 255, 0.05);
+            text-transform: uppercase; font-size: 14px; letter-spacing: 2px;
         }
 
-        .cyber-btn:hover::before { left: 100%; }
+        .btn:hover {
+            border-color: var(--neon-blue);
+            background: rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 15px var(--neon-blue);
+            transform: translateY(-2px);
+        }
 
-        .status { font-size: 10px; color: var(--neon-blue); margin-bottom: 20px; opacity: 0.7; }
+        .btn i { color: var(--neon-blue); font-size: 18px; }
+
+        /* Спец-эффект для кнопок */
+        .btn span::before { content: "> "; color: var(--neon-green); }
     </style>
 </head>
 <body>
 
-    <div id="tsparticles"></div>
+    <canvas id="matrix"></canvas>
 
-    <div class="cyber-card">
-        <div class="status">SYSTEM STATUS: ONLINE // ACCESS: GRANTED</div>
-        
-        <div class="avatar-container">
+    <div class="hacker-card">
+        <div class="avatar-box">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
         
-        <div class="glitch">qexoa</div>
-        <div class="status" style="margin-top: 5px;">root@terminal:~# _</div>
+        <h1>qexoa</h1>
+        <div id="console-text"></div>
 
         <div class="links">
-            <a href="https://t.me/qexoa" target="_blank" class="cyber-btn">
-                <i class="fab fa-telegram-plane"></i> DIRECT_MESSAGE
+            <a href="https://t.me/qexoa" target="_blank" class="btn">
+                <i class="fab fa-telegram-plane"></i> <span>Написать мне</span>
             </a>
-            <a href="https://t.me/savvedata" target="_blank" class="cyber-btn">
-                <i class="fas fa-database"></i> DATA_STREAM
+            <a href="https://t.me/savvedata" target="_blank" class="btn">
+                <i class="fas fa-database"></i> <span>Мой ТГК</span>
             </a>
-            <a href="https://t.me/qexoa_bot" target="_blank" class="cyber-btn">
-                <i class="fas fa-robot"></i> SPAM_SHIELD.EXE
+            <a href="https://t.me/qexoa_bot" target="_blank" class="btn">
+                <i class="fas fa-shield-virus"></i> <span>SpamBlock Bot</span>
             </a>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script>
-        (async () => {
-          await tsParticles.load("tsparticles", {
-            particles: {
-              color: { value: "#00f2ff" },
-              links: { color: "#00f2ff", distance: 100, enable: true, opacity: 0.2 },
-              move: { enable: true, speed: 2 },
-              number: { value: 80 },
-              size: { value: 1 }
+        // ЭФФЕКТ МАТРИЦЫ
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0f0";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
             }
-          });
-        })();
+        }
+        setInterval(drawMatrix, 33);
+
+        // ПЕЧАТАЮЩИЙСЯ ТЕКСТ
+        const textElement = document.getElementById('console-text');
+        const phrases = [
+            "> Initializing system...",
+            "> Loading kernel...",
+            "> Connection established.",
+            "> Hello, qexoa.",
+            "> Waiting for commands..."
+        ];
+        let pIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < phrases[pIndex].length) {
+                textElement.innerHTML += phrases[pIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                setTimeout(() => {
+                    textElement.innerHTML = "";
+                    charIndex = 0;
+                    pIndex = (pIndex + 1) % phrases.length;
+                    type();
+                }, 2000);
+            }
+        }
+        type();
     </script>
 </body>
 </html>
