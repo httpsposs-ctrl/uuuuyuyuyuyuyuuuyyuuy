@@ -9,33 +9,34 @@
         :root {
             --accent: #00f2ff;
             --secondary: #0061ff;
+            --deep: #7000ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Segoe UI', sans-serif; }
         
         body { 
             height: 100vh; display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; background: #05050a; position: relative; 
+            overflow: hidden; background: #020205; position: relative; 
         }
 
-        /* Анимированный фон */
+        /* Улучшенный фон */
         #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
         
         .container {
-            background: rgba(10, 10, 25, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            background: rgba(5, 5, 15, 0.8);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 242, 255, 0.15);
             padding: 40px 25px;
             border-radius: 40px;
             text-align: center;
             width: 95%;
             max-width: 370px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 242, 255, 0.05);
             position: relative;
             z-index: 1;
         }
 
-        /* Анимированная обводка аватарки */
         .profile-wrapper {
             position: relative;
             width: 115px;
@@ -50,7 +51,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 50%;
             padding: 2px;
-            background: linear-gradient(45deg, var(--accent), transparent, var(--secondary), var(--accent));
+            background: linear-gradient(45deg, var(--accent), var(--deep), var(--secondary), var(--accent));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: destination-out;
@@ -64,20 +65,20 @@
             width: 100%; height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(0, 242, 255, 0.2);
-            background: #111;
+            border: 2px solid rgba(0, 242, 255, 0.1);
+            background: #000;
         }
 
         h1 { color: white; font-size: 30px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         
-        .terminal { color: #0f0; font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.9; }
+        .terminal { color: #0f0; font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.8; }
         .cursor { animation: blink 1s infinite; border-left: 7px solid #0f0; margin-left: 4px; }
         @keyframes blink { 50% { opacity: 0; } }
 
         .links { display: flex; flex-direction: column; gap: 12px; }
 
         .link-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             color: white;
             text-decoration: none;
             padding: 16px;
@@ -89,7 +90,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -97,10 +98,10 @@
         .link-card i { font-size: 17px; color: var(--accent); }
 
         .link-card:hover {
-            transform: translateY(-3px);
-            background: rgba(0, 242, 255, 0.08);
+            transform: translateY(-4px);
+            background: rgba(0, 242, 255, 0.1);
             border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 242, 255, 0.15);
         }
 
         .link-card.primary {
@@ -109,12 +110,11 @@
         }
         .link-card.primary i { color: white; }
 
-        /* Стиль для новой кнопки анонимок */
         .link-card.anon {
-            border-color: rgba(255, 0, 255, 0.3);
+            border-color: rgba(255, 0, 255, 0.2);
         }
         .link-card.anon i { color: #ff00ff; }
-        .link-card.anon:hover { border-color: #ff00ff; box-shadow: 0 5px 15px rgba(255, 0, 255, 0.15); }
+        .link-card.anon:hover { border-color: #ff00ff; box-shadow: 0 8px 20px rgba(255, 0, 255, 0.15); }
     </style>
 </head>
 <body>
@@ -154,38 +154,40 @@
           await tsParticles.load("tsparticles", {
             fpsLimit: 120,
             particles: {
-              color: { value: ["#00f2ff", "#0061ff"] },
+              color: { value: ["#00f2ff", "#7000ff", "#0061ff"] },
               links: { 
                 color: "#00f2ff", 
-                distance: 140, 
+                distance: 150, 
                 enable: true, 
-                opacity: 0.25, 
-                width: 1 
+                opacity: 0.3, 
+                width: 1.5 
               },
               move: { 
                 enable: true, 
-                speed: 1.5, 
+                speed: 1.8, 
                 direction: "none",
-                random: true,
+                random: false,
                 straight: false,
-                outModes: { default: "out" }
+                outModes: { default: "bounce" } // Частицы отскакивают от краев
               },
               number: { 
                 density: { enable: true, area: 800 }, 
-                value: 70 
+                value: 90 
               },
               opacity: {
-                value: { min: 0.1, max: 0.6 },
-                animation: { enable: true, speed: 0.5, sync: false }
+                value: { min: 0.2, max: 0.7 },
+                animation: { enable: true, speed: 0.8, sync: false }
               },
-              size: { value: { min: 1, max: 3 } },
+              size: { value: { min: 1, max: 3.5 } },
             },
             interactivity: {
                 events: {
-                    onHover: { enable: true, mode: "grab" }
+                    onHover: { enable: true, mode: "grab" },
+                    onClick: { enable: true, mode: "push" } // Клик добавляет частиц
                 },
                 modes: {
-                    grab: { distance: 200, links: { opacity: 0.5 } }
+                    grab: { distance: 220, links: { opacity: 0.7 } },
+                    push: { quantity: 4 }
                 }
             },
             detectRetina: true,
