@@ -3,109 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | System</title>
+    <title>qexoa | OVERRIDE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --neon-blue: #00f2ff;
-            --neon-pink: #ff00ff;
-            --grid-color: rgba(0, 242, 255, 0.2);
+            --neon: #00f2ff;
+            --hot-pink: #ff00ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', monospace; }
-        
-        body { 
-            background: #000; 
-            overflow: hidden; 
-            height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            perspective: 1000px;
-        }
+        body { background: #000; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        /* Анимированный Кибер-фон (Сетка) */
-        .cyber-grid {
-            position: absolute;
-            width: 200%; height: 200%;
-            top: -50%; left: -50%;
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotateX(60deg) translateY(0);
-            animation: grid-move 5s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes grid-move {
-            from { transform: rotateX(60deg) translateY(0); }
-            to { transform: rotateX(60deg) translateY(50px); }
-        }
-
-        /* Затемнение для читаемости */
-        .overlay {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, #000 80%);
-            z-index: 1;
-        }
+        /* ФОН: ГИПЕРПРЫЖОК */
+        #starfield { position: absolute; width: 100%; height: 100%; z-index: 0; }
 
         .hacker-card {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid var(--neon-blue);
-            padding: 40px 30px;
-            width: 350px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--neon);
+            padding: 40px;
+            width: 360px;
             position: relative;
             z-index: 10;
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
-            backdrop-filter: blur(10px);
+            animation: card-glitch 4s cubic-bezier(.25, .46, .45, .94) infinite both;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.4);
         }
 
+        /* АНИМИРОВАННАЯ АВАТАРКА С ГЛИТЧЕМ */
         .avatar-box {
-            width: 100px; height: 100px; margin: 0 auto 20px;
-            border: 2px solid var(--neon-blue);
-            padding: 3px;
-            box-shadow: 0 0 15px var(--neon-blue);
+            width: 120px; height: 120px; margin: 0 auto 25px;
+            border: 3px solid var(--hot-pink);
+            position: relative;
+            animation: pulse-border 1.5s infinite alternate;
         }
 
-        .profile-img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            animation: img-glitch 2s infinite linear alternate-reverse;
+        }
 
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 10px var(--hot-pink); transform: scale(1); }
+            100% { box-shadow: 0 0 30px var(--hot-pink), 0 0 50px var(--neon); transform: scale(1.05); }
+        }
+
+        /* ТЕКСТОВЫЕ ЭФФЕКТЫ */
         h1 { 
-            color: #fff; font-size: 34px; letter-spacing: 2px; 
-            text-shadow: 0 0 10px var(--neon-blue);
-            margin-bottom: 5px;
+            color: #fff; font-size: 42px; letter-spacing: 4px; font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            animation: text-shake 0.5s infinite;
         }
-        
-        .terminal-line { color: #0f0; font-size: 13px; margin-bottom: 30px; }
-        .cursor { animation: blink 1s infinite; border-left: 7px solid #0f0; margin-left: 5px; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .links { display: flex; flex-direction: column; gap: 12px; }
+        .terminal-line { color: #0f0; font-size: 14px; margin-bottom: 30px; text-shadow: 0 0 10px #0f0; }
+
+        /* КНОПКИ */
+        .links { display: flex; flex-direction: column; gap: 15px; }
 
         .btn {
             text-decoration: none; color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px; display: flex; align-items: center; justify-content: center;
-            gap: 12px; transition: 0.3s; background: rgba(255, 255, 255, 0.03);
-            text-transform: uppercase; font-size: 13px; letter-spacing: 1px;
+            border: 1px solid var(--neon);
+            padding: 16px; display: flex; align-items: center; justify-content: center;
+            gap: 12px; transition: 0.1s; background: rgba(0, 242, 255, 0.1);
+            position: relative; overflow: hidden; font-weight: bold;
         }
 
         .btn:hover {
-            border-color: var(--neon-blue);
-            background: rgba(0, 242, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-            transform: translateY(-2px);
+            background: var(--neon); color: #000;
+            box-shadow: 0 0 40px var(--neon);
+            transform: skewX(-10deg);
         }
 
-        .btn i { color: var(--neon-blue); }
+        /* ГЛИТЧ-АНИМАЦИИ */
+        @keyframes card-glitch {
+            0% { transform: translate(0); }
+            1% { transform: translate(-5px, 3px); }
+            2% { transform: translate(5px, -3px); }
+            3% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes img-glitch {
+            0% { clip-path: inset(10% 0 30% 0); transform: translateX(-5px); }
+            20% { clip-path: inset(40% 0 10% 0); transform: translateX(5px); }
+            40% { clip-path: inset(10% 0 50% 0); transform: translateX(-2px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
+            100% { clip-path: inset(10% 0 30% 0); transform: translateX(-5px); }
+        }
+
+        @keyframes text-shake {
+            0% { text-shadow: 2px 2px var(--hot-pink); }
+            25% { text-shadow: -2px -2px var(--neon); }
+            50% { text-shadow: 2px -2px var(--hot-pink); transform: translateX(1px); }
+            75% { text-shadow: -2px 2px var(--neon); transform: translateX(-1px); }
+            100% { text-shadow: 2px 2px var(--hot-pink); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="cyber-grid"></div>
-    <div class="overlay"></div>
+    <canvas id="starfield"></canvas>
 
     <div class="hacker-card">
         <div class="avatar-box">
@@ -113,20 +110,77 @@
         </div>
         
         <h1>qexoa</h1>
-        <div class="terminal-line">root@terminal:~# _<span class="cursor"></span></div>
+        <div class="terminal-line">SYSTEM_ERROR: ROOT_ACCESS_GRANTED</div>
 
         <div class="links">
             <a href="https://t.me/qexoa" target="_blank" class="btn">
-                <i class="fab fa-telegram-plane"></i> Написать мне
+                <i class="fab fa-telegram-plane"></i> НАПИСАТЬ МНЕ
             </a>
             <a href="https://t.me/savvedata" target="_blank" class="btn">
-                <i class="fas fa-database"></i> Мой ТГК
+                <i class="fas fa-database"></i> МОЙ ТГК
             </a>
             <a href="https://t.me/qexoa_bot" target="_blank" class="btn">
-                <i class="fas fa-robot"></i> SpamBlock Bot
+                <i class="fas fa-robot"></i> SPAMBLOCK BOT
             </a>
         </div>
     </div>
 
+    <script>
+        // СКРИПТ ДЛЯ ФОНА "ГИПЕРПРЫЖОК"
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = 500;
+        const speed = 15;
+
+        function initStars() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width - canvas.width / 2,
+                    y: Math.random() * canvas.height - canvas.height / 2,
+                    z: Math.random() * canvas.width
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+
+            for (let i = 0; i < numStars; i++) {
+                let star = stars[i];
+                star.z -= speed;
+                if (star.z <= 0) star.z = canvas.width;
+
+                let sx = star.x / (star.z / canvas.width);
+                let sy = star.y / (star.z / canvas.width);
+                let size = (1 - star.z / canvas.width) * 3;
+
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(sx, sy, size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Рисуем хвост звезды
+                ctx.strokeStyle = "rgba(0, 242, 255, " + (1 - star.z / canvas.width) + ")";
+                ctx.lineWidth = size;
+                ctx.beginPath();
+                ctx.moveTo(sx, sy);
+                ctx.lineTo(sx * 1.1, sy * 1.1);
+                ctx.stroke();
+            }
+            ctx.restore();
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', initStars);
+        initStars();
+        drawStars();
+    </script>
 </body>
 </html>
