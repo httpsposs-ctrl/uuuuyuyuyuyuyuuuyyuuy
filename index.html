@@ -3,125 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | Digital Profile</title>
+    <title>qexoa | System Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- БАЗОВЫЕ НАСТРОЙКИ И ПЕРЕМЕННЫЕ --- */
         :root {
-            --accent: #00f2ff;
-            --secondary: #0061ff;
-            --deep: #7000ff;
+            --accent: #00f2ff;    /* Основной неон (голубой) */
+            --secondary: #0061ff; /* Вторичный (синий) */
+            --deep: #7000ff;      /* Глубокий (фиолетовый) */
+            --warning: #ffa500;   /* Акцент для портфолио (оранжевый) */
+            --success: #0f0;      /* Зеленый для статусов */
+            --bg-dark: #020205;   /* Цвет фона */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Segoe UI', sans-serif; }
         
         body { 
             height: 100vh; display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; background: #020205; position: relative; 
+            overflow: hidden; background: var(--bg-dark); position: relative; 
         }
 
-        /* Улучшенный фон */
+        /* Задний фон с частицами */
         #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-        
+
+        /* --- ГЛАВНАЯ КАРТОЧКА --- */
         .container {
-            background: rgba(5, 5, 15, 0.8);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(5, 5, 15, 0.85);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(0, 242, 255, 0.15);
-            padding: 40px 25px;
-            border-radius: 40px;
-            text-align: center;
-            width: 95%;
-            max-width: 370px;
+            padding: 40px 25px; border-radius: 40px;
+            text-align: center; width: 95%; max-width: 370px;
             box-shadow: 0 0 60px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 242, 255, 0.05);
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
+            transition: transform 0.3s ease;
         }
 
-        .profile-wrapper {
-            position: relative;
-            width: 115px;
-            height: 115px;
-            margin: 0 auto 20px;
-            padding: 5px;
-        }
-
+        /* Анимированная обводка аватарки */
+        .profile-wrapper { position: relative; width: 115px; height: 115px; margin: 0 auto 20px; padding: 5px; }
         .profile-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50%;
-            padding: 2px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%; padding: 2px;
             background: linear-gradient(45deg, var(--accent), var(--deep), var(--secondary), var(--accent));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
+            -webkit-mask-composite: destination-out; mask-composite: exclude;
             animation: rotate 4s linear infinite;
         }
-        
         @keyframes rotate { 100% { transform: rotate(360deg); } }
 
         .profile-img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(0, 242, 255, 0.1);
-            background: #000;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(0, 242, 255, 0.1); background: #000;
         }
 
         h1 { color: white; font-size: 30px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        
-        .terminal { color: #0f0; font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.8; }
-        .cursor { animation: blink 1s infinite; border-left: 7px solid #0f0; margin-left: 4px; }
+        .terminal { color: var(--success); font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.8; }
+        .cursor { animation: blink 1s infinite; border-left: 7px solid var(--success); margin-left: 4px; }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* --- ССЫЛКИ (КНОПКИ) --- */
         .links { display: flex; flex-direction: column; gap: 12px; }
-
         .link-card {
-            background: rgba(255, 255, 255, 0.02);
-            color: white;
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 18px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.02); color: white; text-decoration: none;
+            padding: 16px; border-radius: 18px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center;
+            gap: 12px; border: 1px solid rgba(255, 255, 255, 0.05); text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; /* Добавлено для кнопки портфолио */
         }
+        .link-card:hover { transform: translateY(-4px); }
+        .link-card i { font-size: 17px; }
 
-        .link-card i { font-size: 17px; color: var(--accent); }
+        /* Цветовые схемы кнопок */
+        .link-card.primary { background: linear-gradient(45deg, #0088cc, #0061ff); border: none; }
+        .link-card.primary:hover { box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3); }
 
-        .link-card:hover {
-            transform: translateY(-4px);
-            background: rgba(0, 242, 255, 0.1);
-            border-color: var(--accent);
-            box-shadow: 0 8px 20px rgba(0, 242, 255, 0.15);
-        }
+        .link-card.default:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--accent); box-shadow: 0 8px 20px rgba(0, 242, 255, 0.15); }
+        .link-card.default i { color: var(--accent); }
 
-        .link-card.primary {
-            background: linear-gradient(45deg, #0088cc, #0061ff);
-            border: none;
-        }
-        .link-card.primary i { color: white; }
-
-        .link-card.anon {
-            border-color: rgba(255, 0, 255, 0.2);
-        }
+        .link-card.anon { border-color: rgba(255, 0, 255, 0.2); }
         .link-card.anon i { color: #ff00ff; }
-        .link-card.anon:hover { border-color: #ff00ff; box-shadow: 0 8px 20px rgba(255, 0, 255, 0.15); }
+        .link-card.anon:hover { border-color: #ff00ff; background: rgba(255, 0, 255, 0.05); box-shadow: 0 8px 20px rgba(255, 0, 255, 0.15); }
+
+        /* Новая кнопка Портфолио */
+        .link-card.portfolio { border-color: rgba(255, 165, 0, 0.3); }
+        .link-card.portfolio i { color: var(--warning); }
+        .link-card.portfolio:hover { border-color: var(--warning); background: rgba(255, 165, 0, 0.05); box-shadow: 0 8px 20px rgba(255, 165, 0, 0.15); }
+
+
+        /* --- МОДАЛЬНОЕ ОКНО ПОРТФОЛИО --- */
+        #portfolio-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 100; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.4s ease;
+        }
+        #portfolio-modal.active { opacity: 1; pointer-events: all; }
+
+        .modal-content {
+            background: rgba(10, 10, 25, 0.95); border: 1px solid var(--warning);
+            width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px;
+            padding: 25px; overflow-y: auto; position: relative;
+            box-shadow: 0 0 50px rgba(255, 165, 0, 0.15);
+            transform: translateY(20px); transition: 0.4s ease;
+        }
+        #portfolio-modal.active .modal-content { transform: translateY(0); }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255, 165, 0, 0.3); padding-bottom: 15px; }
+        .modal-title { color: var(--warning); font-size: 20px; letter-spacing: 2px; }
+        .close-btn { color: #fff; font-size: 24px; cursor: pointer; transition: 0.2s; opacity: 0.7; }
+        .close-btn:hover { color: var(--warning); opacity: 1; transform: rotate(90deg); }
+
+        /* --- КАРТОЧКИ ПРОЕКТОВ ВНУТРИ МОДАЛКИ --- */
+        .project-list { display: flex; flex-direction: column; gap: 15px; }
+        .project-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px; border-radius: 15px; text-align: left; transition: 0.3s;
+        }
+        .project-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); transform: translateX(5px); }
+
+        .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .project-title { color: #fff; font-size: 16px; font-weight: bold; letter-spacing: 1px; }
+        .project-status { font-size: 10px; padding: 2px 8px; border-radius: 10px; letter-spacing: 1px; }
+        .status-live { background: rgba(0, 255, 0, 0.1); color: var(--success); border: 1px solid var(--success); }
+        .status-dev { background: rgba(255, 165, 0, 0.1); color: var(--warning); border: 1px solid var(--warning); }
+
+        .project-desc { color: rgba(255, 255, 255, 0.7); font-size: 12px; margin-bottom: 15px; line-height: 1.4; }
+
+        .project-stack { display: flex; gap: 10px; font-size: 18px; }
+        .project-stack i { color: var(--accent); opacity: 0.8; transition: 0.2s; }
+        .project-stack i:hover { opacity: 1; color: #fff; }
+        
+        /* Скроллбар для модалки */
+        .modal-content::-webkit-scrollbar { width: 5px; }
+        .modal-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--warning); border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div id="tsparticles"></div>
 
-    <div class="container">
+    <div class="container" id="main-card">
         <div class="profile-wrapper">
             <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
@@ -134,65 +156,119 @@
                 <i class="fab fa-telegram-plane"></i> Написать мне
             </a>
             
-            <a href="https://t.me/savvedata" target="_blank" class="link-card">
+            <a href="https://t.me/savvedata" target="_blank" class="link-card default">
                 <i class="fas fa-bullhorn"></i> Мой канал
             </a>
 
-            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
+            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card default">
                 <i class="fas fa-robot"></i> SpamBlock Bot
             </a>
 
             <a href="http://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link-card anon">
-                <i class="fas fa-user-secret"></i> Анонимные сообщения
+                <i class="fas fa-user-secret"></i> Анонимки
             </a>
+
+            <div class="link-card portfolio" onclick="togglePortfolio()">
+                <i class="fas fa-terminal"></i> Портфолио / Кейсы
+            </div>
         </div>
     </div>
 
+
+    <div id="portfolio-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">> PROJECT_ARCHIVE</h2>
+                <i class="fas fa-times close-btn" onclick="togglePortfolio()"></i>
+            </div>
+
+            <div class="project-list">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">SPAMBLOCK_BOT_AI</span>
+                        <span class="project-status status-live">DEPLOYED</span>
+                    </div>
+                    <p class="project-desc">
+                        Телеграм бот на базе нейросети для фильтрации спама и модерации чатов. Обработка >10k сообщений в сутки.
+                    </p>
+                    <div class="project-stack">
+                        <i class="fab fa-python" title="Python"></i>
+                        <i class="fas fa-brain" title="AI/ML"></i>
+                        <i class="fab fa-docker" title="Docker"></i>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">CRYPTO_SNIPER_V3</span>
+                        <span class="project-status status-dev">IN_DEVELOPMENT</span>
+                    </div>
+                    <p class="project-desc">
+                        Приватный софт для автоматической торговли на DEX биржах (TON/ETH). Мониторинг мемпула и авто-покупка.
+                    </p>
+                    <div class="project-stack">
+                        <i class="fab fa-js-square" title="JavaScript"></i>
+                        <i class="fab fa-node-js" title="Node.js"></i>
+                        <i class="fas fa-satellite-dish" title="Web3"></i>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">DATA_PARSER_CORE</span>
+                        <span class="project-status status-live">ACTIVE</span>
+                    </div>
+                    <p class="project-desc">
+                        Многопоточный парсер данных с закрытых источников и форумов. Экспорт в JSON/CSV.
+                    </p>
+                    <div class="project-stack">
+                        <i class="fab fa-python" title="Python"></i>
+                        <i class="fas fa-database" title="SQL"></i>
+                    </div>
+                </div>
+                 </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script>
+        // --- НАСТРОЙКА ФОНА (ЧАСТИЦЫ) ---
         (async () => {
           await tsParticles.load("tsparticles", {
             fpsLimit: 120,
             particles: {
               color: { value: ["#00f2ff", "#7000ff", "#0061ff"] },
-              links: { 
-                color: "#00f2ff", 
-                distance: 150, 
-                enable: true, 
-                opacity: 0.3, 
-                width: 1.5 
-              },
-              move: { 
-                enable: true, 
-                speed: 1.8, 
-                direction: "none",
-                random: false,
-                straight: false,
-                outModes: { default: "bounce" } // Частицы отскакивают от краев
-              },
-              number: { 
-                density: { enable: true, area: 800 }, 
-                value: 90 
-              },
-              opacity: {
-                value: { min: 0.2, max: 0.7 },
-                animation: { enable: true, speed: 0.8, sync: false }
-              },
+              links: { color: "#00f2ff", distance: 150, enable: true, opacity: 0.3, width: 1.5 },
+              move: { enable: true, speed: 1.8, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
+              number: { density: { enable: true, area: 800 }, value: 90 },
+              opacity: { value: { min: 0.2, max: 0.7 }, animation: { enable: true, speed: 0.8, sync: false } },
               size: { value: { min: 1, max: 3.5 } },
             },
             interactivity: {
-                events: {
-                    onHover: { enable: true, mode: "grab" },
-                    onClick: { enable: true, mode: "push" } // Клик добавляет частиц
-                },
-                modes: {
-                    grab: { distance: 220, links: { opacity: 0.7 } },
-                    push: { quantity: 4 }
-                }
+                events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
+                modes: { grab: { distance: 220, links: { opacity: 0.7 } }, push: { quantity: 4 } }
             },
             detectRetina: true,
           });
         })();
+
+        // --- ЛОГИКА ОТКРЫТИЯ/ЗАКРЫТИЯ ПОРТФОЛИО ---
+        function togglePortfolio() {
+            const modal = document.getElementById('portfolio-modal');
+            const mainCard = document.getElementById('main-card');
+            
+            modal.classList.toggle('active');
+            
+            // Небольшой визуальный эффект для главной карточки при открытии модалки
+            if (modal.classList.contains('active')) {
+                mainCard.style.transform = 'scale(0.95)';
+                mainCard.style.filter = 'blur(5px)';
+            } else {
+                mainCard.style.transform = 'scale(1)';
+                mainCard.style.filter = 'blur(0px)';
+            }
+        }
     </script>
 </body>
 </html>
