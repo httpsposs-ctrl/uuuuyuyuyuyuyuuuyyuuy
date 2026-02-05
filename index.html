@@ -3,140 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qexoa | System Hub</title>
+    <title>qexoa | Dev Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ И ПЕРЕМЕННЫЕ --- */
+        /* --- ЦВЕТОВАЯ ПАЛИТРА (Fantasy + Code) --- */
         :root {
-            --accent: #00f2ff;    /* Основной неон (голубой) */
-            --secondary: #0061ff; /* Вторичный (синий) */
-            --deep: #7000ff;      /* Глубокий (фиолетовый) */
-            --warning: #ffa500;   /* Акцент для портфолио (оранжевый) */
-            --success: #0f0;      /* Зеленый для статусов */
-            --bg-dark: #020205;   /* Цвет фона */
+            --primary: #00d2ff;   /* Техно-голубой */
+            --magic: #bd00ff;     /* Магический фиолетовый */
+            --bg-deep: #050510;   /* Глубокий космос */
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --font-code: 'Consolas', 'Segoe UI', monospace;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Segoe UI', sans-serif; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-code); }
+
         body { 
             height: 100vh; display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; background: var(--bg-dark); position: relative; 
+            overflow: hidden; background: var(--bg-deep); position: relative; color: white;
         }
 
-        /* Задний фон с частицами */
+        /* Фон с частицами */
         #tsparticles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
 
-        /* --- ГЛАВНАЯ КАРТОЧКА --- */
+        /* --- ГЛАВНАЯ КАРТОЧКА (Левитация) --- */
         .container {
-            background: rgba(5, 5, 15, 0.85);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            padding: 40px 25px; border-radius: 40px;
-            text-align: center; width: 95%; max-width: 370px;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 242, 255, 0.05);
+            background: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 45px 30px; border-radius: 30px;
+            text-align: center; width: 90%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(189, 0, 255, 0.05);
             position: relative; z-index: 1;
-            transition: transform 0.3s ease;
+            animation: float 6s ease-in-out infinite; /* Легкое парение */
+            transition: 0.5s ease;
         }
 
-        /* Анимированная обводка аватарки */
-        .profile-wrapper { position: relative; width: 115px; height: 115px; margin: 0 auto 20px; padding: 5px; }
-        .profile-wrapper::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50%; padding: 2px;
-            background: linear-gradient(45deg, var(--accent), var(--deep), var(--secondary), var(--accent));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out; mask-composite: exclude;
-            animation: rotate 4s linear infinite;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
+        /* Свечение вокруг карточки */
+        .container::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px; z-index: -1;
+            background: linear-gradient(45deg, var(--primary), transparent, var(--magic));
+            opacity: 0.3; filter: blur(15px);
+        }
+
+        /* Аватар */
+        .profile-wrapper { 
+            width: 120px; height: 120px; margin: 0 auto 20px; 
+            position: relative; padding: 4px;
+        }
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(0, 242, 255, 0.1); background: #000;
+            border: 2px solid rgba(255,255,255,0.1);
         }
+        /* Вращающийся магический круг вокруг фото */
+        .ring {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; border: 1px dashed var(--primary);
+            animation: spin 20s linear infinite; opacity: 0.5;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        h1 { color: white; font-size: 30px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        .terminal { color: var(--success); font-size: 13px; margin-bottom: 25px; font-family: monospace; opacity: 0.8; }
-        .cursor { animation: blink 1s infinite; border-left: 7px solid var(--success); margin-left: 4px; }
-        @keyframes blink { 50% { opacity: 0; } }
+        h1 { font-size: 26px; font-weight: 600; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 0 15px rgba(189, 0, 255, 0.4); }
+        .subtitle { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 30px; display: flex; justify-content: center; gap: 10px; }
+        .subtitle i { color: var(--magic); font-size: 10px; margin-top: 3px; }
 
-        /* --- ССЫЛКИ (КНОПКИ) --- */
-        .links { display: flex; flex-direction: column; gap: 12px; }
+        /* --- КНОПКИ --- */
+        .links { display: flex; flex-direction: column; gap: 15px; }
         .link-card {
-            background: rgba(255, 255, 255, 0.02); color: white; text-decoration: none;
-            padding: 16px; border-radius: 18px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center;
-            gap: 12px; border: 1px solid rgba(255, 255, 255, 0.05); text-transform: uppercase; letter-spacing: 1px;
-            cursor: pointer; /* Добавлено для кнопки портфолио */
+            background: var(--glass); color: rgba(255,255,255,0.9); text-decoration: none;
+            padding: 18px; border-radius: 16px; transition: all 0.4s ease;
+            font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 12px;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+            cursor: pointer;
         }
-        .link-card:hover { transform: translateY(-4px); }
-        .link-card i { font-size: 17px; }
 
-        /* Цветовые схемы кнопок */
-        .link-card.primary { background: linear-gradient(45deg, #0088cc, #0061ff); border: none; }
-        .link-card.primary:hover { box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3); }
+        /* Мягкая подсветка при наведении */
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .link-card i { transition: 0.3s; }
+        .link-card:hover i { transform: scale(1.1); color: var(--primary); text-shadow: 0 0 10px var(--primary); }
 
-        .link-card.default:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--accent); box-shadow: 0 8px 20px rgba(0, 242, 255, 0.15); }
-        .link-card.default i { color: var(--accent); }
+        /* Особые стили кнопок */
+        .link-card.primary { border-color: rgba(0, 210, 255, 0.3); }
+        .link-card.primary i { color: var(--primary); }
+        
+        .link-card.portfolio { border-color: rgba(189, 0, 255, 0.3); }
+        .link-card.portfolio i { color: var(--magic); }
 
-        .link-card.anon { border-color: rgba(255, 0, 255, 0.2); }
-        .link-card.anon i { color: #ff00ff; }
-        .link-card.anon:hover { border-color: #ff00ff; background: rgba(255, 0, 255, 0.05); box-shadow: 0 8px 20px rgba(255, 0, 255, 0.15); }
-
-        /* Новая кнопка Портфолио */
-        .link-card.portfolio { border-color: rgba(255, 165, 0, 0.3); }
-        .link-card.portfolio i { color: var(--warning); }
-        .link-card.portfolio:hover { border-color: var(--warning); background: rgba(255, 165, 0, 0.05); box-shadow: 0 8px 20px rgba(255, 165, 0, 0.15); }
-
-
-        /* --- МОДАЛЬНОЕ ОКНО ПОРТФОЛИО --- */
+        /* --- МОДАЛЬНОЕ ОКНО (ПОРТФОЛИО) --- */
         #portfolio-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(5, 5, 16, 0.85); backdrop-filter: blur(10px);
             z-index: 100; display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: 0.4s ease;
+            opacity: 0; pointer-events: none; transition: all 0.5s ease;
         }
         #portfolio-modal.active { opacity: 1; pointer-events: all; }
 
         .modal-content {
-            background: rgba(10, 10, 25, 0.95); border: 1px solid var(--warning);
+            background: linear-gradient(145deg, rgba(20,20,30,0.9), rgba(10,10,20,0.95));
+            border: 1px solid var(--border);
             width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px;
-            padding: 25px; overflow-y: auto; position: relative;
-            box-shadow: 0 0 50px rgba(255, 165, 0, 0.15);
-            transform: translateY(20px); transition: 0.4s ease;
+            padding: 35px; overflow-y: auto;
+            transform: translateY(30px); opacity: 0; transition: all 0.5s ease;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
-        #portfolio-modal.active .modal-content { transform: translateY(0); }
+        #portfolio-modal.active .modal-content { transform: translateY(0); opacity: 1; }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255, 165, 0, 0.3); padding-bottom: 15px; }
-        .modal-title { color: var(--warning); font-size: 20px; letter-spacing: 2px; }
-        .close-btn { color: #fff; font-size: 24px; cursor: pointer; transition: 0.2s; opacity: 0.7; }
-        .close-btn:hover { color: var(--warning); opacity: 1; transform: rotate(90deg); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+        .modal-title { font-size: 18px; letter-spacing: 1px; color: #fff; }
+        .close-btn { color: #fff; font-size: 20px; cursor: pointer; transition: 0.3s; opacity: 0.6; }
+        .close-btn:hover { opacity: 1; transform: rotate(90deg); color: var(--magic); }
 
-        /* --- КАРТОЧКИ ПРОЕКТОВ ВНУТРИ МОДАЛКИ --- */
-        .project-list { display: flex; flex-direction: column; gap: 15px; }
+        /* Список проектов */
         .project-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px; border-radius: 15px; text-align: left; transition: 0.3s;
+            background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px;
+            margin-bottom: 15px; border: 1px solid transparent; transition: 0.3s;
         }
-        .project-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); transform: translateX(5px); }
+        .project-card:hover { 
+            background: rgba(255,255,255,0.04); 
+            border-color: rgba(0, 210, 255, 0.2); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .p-head { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .p-name { font-weight: bold; color: white; font-size: 15px; }
+        .p-status { font-size: 10px; padding: 4px 10px; border-radius: 20px; background: rgba(0, 210, 255, 0.1); color: var(--primary); }
+        .p-desc { font-size: 13px; color: #aaa; line-height: 1.5; margin-bottom: 12px; }
+        .p-stack { display: flex; gap: 10px; font-size: 16px; color: var(--magic); opacity: 0.8; }
 
-        .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .project-title { color: #fff; font-size: 16px; font-weight: bold; letter-spacing: 1px; }
-        .project-status { font-size: 10px; padding: 2px 8px; border-radius: 10px; letter-spacing: 1px; }
-        .status-live { background: rgba(0, 255, 0, 0.1); color: var(--success); border: 1px solid var(--success); }
-        .status-dev { background: rgba(255, 165, 0, 0.1); color: var(--warning); border: 1px solid var(--warning); }
-
-        .project-desc { color: rgba(255, 255, 255, 0.7); font-size: 12px; margin-bottom: 15px; line-height: 1.4; }
-
-        .project-stack { display: flex; gap: 10px; font-size: 18px; }
-        .project-stack i { color: var(--accent); opacity: 0.8; transition: 0.2s; }
-        .project-stack i:hover { opacity: 1; color: #fff; }
-        
-        /* Скроллбар для модалки */
-        .modal-content::-webkit-scrollbar { width: 5px; }
-        .modal-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-        .modal-content::-webkit-scrollbar-thumb { background: var(--warning); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -145,128 +148,138 @@
 
     <div class="container" id="main-card">
         <div class="profile-wrapper">
-            <img src="avatar.jpg" alt="qexoa" class="profile-img">
+            <div class="ring"></div> <img src="avatar.jpg" alt="qexoa" class="profile-img">
         </div>
         
         <h1>qexoa</h1>
-        <div class="terminal">root@terminal:~# _<span class="cursor"></span></div>
+        <div class="subtitle">
+            <i class="fas fa-code"></i> Ruthincite 
+            <span style="opacity: 0.3">|</span> 
+            <i class="fas fa-cube"></i> Creator
+        </div>
 
         <div class="links">
             <a href="https://t.me/qexoa" target="_blank" class="link-card primary">
                 <i class="fab fa-telegram-plane"></i> Написать мне
             </a>
             
-            <a href="https://t.me/savvedata" target="_blank" class="link-card default">
+            <a href="https://t.me/savvedata" target="_blank" class="link-card">
                 <i class="fas fa-bullhorn"></i> Мой канал
             </a>
 
-            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card default">
+            <a href="https://t.me/qexoa_bot" target="_blank" class="link-card">
                 <i class="fas fa-robot"></i> SpamBlock Bot
             </a>
 
-            <a href="http://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link-card anon">
-                <i class="fas fa-user-secret"></i> Анонимные Сообщения
+            <a href="http://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link-card">
+                <i class="fas fa-user-secret"></i> Анонимные сообщения
             </a>
 
             <div class="link-card portfolio" onclick="togglePortfolio()">
-                <i class="fas fa-terminal"></i> Портфолио / Кейсы
+                <i class="fas fa-layer-group"></i> Проекты / Портфолио
             </div>
         </div>
     </div>
 
-
     <div id="portfolio-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">> PROJECT_ARCHIVE</h2>
+                <span class="modal-title">Избранные проекты</span>
                 <i class="fas fa-times close-btn" onclick="togglePortfolio()"></i>
             </div>
 
             <div class="project-list">
                 <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-title">SPAMBLOCK_BOT</span>
-                        <span class="project-status status-live">DEPLOYED</span>
+                    <div class="p-head">
+                        <span class="p-name">SpamBlock </span>
+                        <span class="p-status">Active</span>
                     </div>
-                    <p class="project-desc">
-                        Телеграм бот на базе нейросети для фильтрации спама и модерации чатов. Обработка >10k сообщений в сутки.
-                    </p>
-                    <div class="project-stack">
+                    <p class="p-desc">Интеллектуальная система защиты чатов. Фильтрует спам с точностью 99% без участия администраторов.</p>
+                    <div class="p-stack">
                         <i class="fab fa-python" title="Python"></i>
-                        <i class="fas fa-brain" title="AI/ML"></i>
-                        <i class="fab fa-docker" title="Docker"></i>
+                        <i class="fas fa-brain" title="Neural Nets"></i>
                     </div>
                 </div>
 
                 <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-title">CRYPTO</span>
-                        <span class="project-status status-dev">IN_DEVELOPMENT</span>
+                    <div class="p-head">
+                        <span class="p-name">DEX Trader</span>
+                        <span class="p-status" style="color: var(--magic); background: rgba(189,0,255,0.1)">Beta</span>
                     </div>
-                    <p class="project-desc">
-                        Приватный софт для автоматической торговли на DEX биржах (TON/ETH). Мониторинг мемпула и авто-покупка.
-                    </p>
-                    <div class="project-stack">
-                        <i class="fab fa-js-square" title="JavaScript"></i>
-                        <i class="fab fa-node-js" title="Node.js"></i>
-                        <i class="fas fa-satellite-dish" title="Web3"></i>
+                    <p class="p-desc">Автоматизированный софт для работы с децентрализованными биржами. Мониторинг ликвидности.</p>
+                    <div class="p-stack">
+                        <i class="fab fa-js" title="JS"></i>
+                        <i class="fas fa-coins" title="Web3"></i>
                     </div>
                 </div>
 
                 <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-title">PARSER</span>
-                        <span class="project-status status-live">ACTIVE</span>
+                    <div class="p-head">
+                        <span class="p-name">Data Parser</span>
+                        <span class="p-status">Private</span>
                     </div>
-                    <p class="project-desc">
-                        Многопоточный парсер данных с закрытых источников и форумов. Экспорт в JSON/CSV.
-                    </p>
-                    <div class="project-stack">
-                        <i class="fab fa-python" title="Python"></i>
-                        <i class="fas fa-database" title="SQL"></i>
+                    <p class="p-desc">Многопоточный сбор и анализ данных. Структурирование информации в удобные форматы.</p>
+                    <div class="p-stack">
+                        <i class="fas fa-database" title="Data"></i>
+                        <i class="fas fa-network-wired" title="Parsing"></i>
                     </div>
                 </div>
-                 </div>
+            </div>
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script>
-        // --- НАСТРОЙКА ФОНА (ЧАСТИЦЫ) ---
+        // --- НАСТРОЙКА ЧАСТИЦ (Плавная магия) ---
         (async () => {
           await tsParticles.load("tsparticles", {
-            fpsLimit: 120,
+            fpsLimit: 60,
             particles: {
-              color: { value: ["#00f2ff", "#7000ff", "#0061ff"] },
-              links: { color: "#00f2ff", distance: 150, enable: true, opacity: 0.3, width: 1.5 },
-              move: { enable: true, speed: 1.8, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
-              number: { density: { enable: true, area: 800 }, value: 90 },
-              opacity: { value: { min: 0.2, max: 0.7 }, animation: { enable: true, speed: 0.8, sync: false } },
-              size: { value: { min: 1, max: 3.5 } },
+              color: { value: ["#00d2ff", "#bd00ff"] }, // Голубой и фиолетовый
+              links: { 
+                  color: "#ffffff", 
+                  distance: 150, 
+                  enable: true, 
+                  opacity: 0.1, // Очень тонкие связи
+                  width: 1 
+              },
+              move: { 
+                  enable: true, 
+                  speed: 0.6, // Очень медленное движение
+                  direction: "none", 
+                  random: true, 
+                  straight: false, 
+                  outModes: { default: "out" } 
+              },
+              number: { density: { enable: true, area: 800 }, value: 60 },
+              opacity: { 
+                  value: { min: 0.1, max: 0.5 }, 
+                  animation: { enable: true, speed: 1, minimumValue: 0.1 } // Мерцание
+              },
+              size: { value: { min: 1, max: 3 } },
             },
             interactivity: {
-                events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
-                modes: { grab: { distance: 220, links: { opacity: 0.7 } }, push: { quantity: 4 } }
+                events: { onHover: { enable: true, mode: "bubble" } },
+                modes: { bubble: { distance: 200, size: 4, duration: 2, opacity: 0.8 } }
             },
             detectRetina: true,
           });
         })();
 
-        // --- ЛОГИКА ОТКРЫТИЯ/ЗАКРЫТИЯ ПОРТФОЛИО ---
+        // --- ЛОГИКА МОДАЛКИ (Плавная) ---
         function togglePortfolio() {
             const modal = document.getElementById('portfolio-modal');
             const mainCard = document.getElementById('main-card');
             
             modal.classList.toggle('active');
             
-            // Небольшой визуальный эффект для главной карточки при открытии модалки
+            // Легкое размытие заднего фона
             if (modal.classList.contains('active')) {
+                mainCard.style.filter = 'blur(5px) brightness(0.7)';
                 mainCard.style.transform = 'scale(0.95)';
-                mainCard.style.filter = 'blur(5px)';
             } else {
-                mainCard.style.transform = 'scale(1)';
-                mainCard.style.filter = 'blur(0px)';
+                mainCard.style.filter = 'none';
+                mainCard.style.transform = 'scale(1) translateY(0)'; // Возвращаем анимацию
             }
         }
     </script>
