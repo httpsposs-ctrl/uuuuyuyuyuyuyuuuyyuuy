@@ -233,7 +233,7 @@
         // --- НАСТРОЙКА ЧАСТИЦ (Плавная магия) ---
         (async () => {
           await tsParticles.load("tsparticles", {
-            fpsLimit: 60,
+            fpsLimit: 600,
             particles: {
               color: { value: ["#00d2ff", "#bd00ff"] }, // Голубой и фиолетовый
               links: { 
@@ -245,7 +245,7 @@
               },
               move: { 
                   enable: true, 
-                  speed: 0.6, // Очень медленное движение
+                  speed: 0.8, // Очень медленное движение
                   direction: "none", 
                   random: true, 
                   straight: false, 
