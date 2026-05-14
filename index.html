@@ -3,374 +3,372 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Quake | Bio Page</title>
+<title>Quake | Bio</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-  rel="stylesheet"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 :root {
-  --bg-1: #050505;
-  --bg-2: #111111;
-  --gold-1: #ffd86b;
-  --gold-2: #ffb700;
-  --gold-3: #8a6500;
-  --text: #ffffff;
-  --text-muted: #c9c9c9;
-  --glass: rgba(10, 10, 10, 0.82);
-  --border: rgba(255, 215, 100, 0.22);
-  --shadow: 0 25px 80px rgba(0, 0, 0, 0.85);
+    --bg: #030303;
+    --card: rgba(8, 8, 8, 0.78);
+    --border: rgba(255, 215, 90, 0.18);
+    --gold-1: #ffe9a3;
+    --gold-2: #ffcf4d;
+    --gold-3: #ffb100;
+    --text: #ffffff;
+    --muted: #b7b7b7;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: "Inter", sans-serif;
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 183, 0, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(255, 216, 107, 0.06), transparent 40%),
-    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    font-family: 'Inter', sans-serif;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255, 177, 0, 0.08), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(255, 207, 77, 0.06), transparent 30%),
+        radial-gradient(circle at 50% 50%, #0f0f0f, #030303 70%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    color: var(--text);
 }
 
-/* Анимированный фон */
+/* Плавающие световые пятна */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 45vw;
+    height: 45vw;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.08;
+    z-index: 0;
+    animation: drift 20s ease-in-out infinite alternate;
+}
+
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(
-      120deg,
-      transparent 0%,
-      rgba(255, 215, 100, 0.03) 25%,
-      transparent 50%,
-      rgba(255, 215, 100, 0.03) 75%,
-      transparent 100%
-    );
-  background-size: 300% 300%;
-  animation: bgMove 12s linear infinite;
-  pointer-events: none;
+    background: #ffb100;
+    top: -10%;
+    left: -10%;
 }
 
-@keyframes bgMove {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+body::after {
+    background: #ffd54a;
+    right: -10%;
+    bottom: -10%;
+    animation-delay: 4s;
 }
 
-/* Частицы */
+@keyframes drift {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        transform: translate(60px, -40px) scale(1.15);
+    }
+}
+
+/* Мелкие частицы */
 .particles {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .particles span {
-  position: absolute;
-  display: block;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: rgba(255, 215, 100, 0.7);
-  box-shadow: 0 0 8px rgba(255, 215, 100, 0.8);
-  animation: float 12s linear infinite;
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(255, 215, 90, 0.45);
+    box-shadow: 0 0 8px rgba(255, 215, 90, 0.4);
+    animation: rise linear infinite;
 }
 
-.particles span:nth-child(1)  { left: 10%; top: 100%; animation-delay: 0s; }
-.particles span:nth-child(2)  { left: 20%; top: 100%; animation-delay: 2s; }
-.particles span:nth-child(3)  { left: 30%; top: 100%; animation-delay: 4s; }
-.particles span:nth-child(4)  { left: 40%; top: 100%; animation-delay: 1s; }
-.particles span:nth-child(5)  { left: 50%; top: 100%; animation-delay: 3s; }
-.particles span:nth-child(6)  { left: 60%; top: 100%; animation-delay: 5s; }
-.particles span:nth-child(7)  { left: 70%; top: 100%; animation-delay: 6s; }
-.particles span:nth-child(8)  { left: 80%; top: 100%; animation-delay: 7s; }
-.particles span:nth-child(9)  { left: 90%; top: 100%; animation-delay: 8s; }
-
-@keyframes float {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-110vh) scale(0);
-    opacity: 0;
-  }
+@keyframes rise {
+    from {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
 }
 
-/* Карточка */
 .card {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 420px;
-  padding: 42px 30px 30px;
-  border-radius: 32px;
-  background: var(--glass);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  overflow: hidden;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 430px;
+    padding: 42px 30px 30px;
+    border-radius: 34px;
+    background: var(--card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: 32px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 216, 107, 0.55),
-    rgba(255, 183, 0, 0.12),
-    rgba(255, 216, 107, 0.35)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg,
+        rgba(255, 233, 163, 0.45),
+        rgba(255, 177, 0, 0.06),
+        rgba(255, 233, 163, 0.2));
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
-/* Аватар */
 .avatar-wrap {
-  position: relative;
-  width: 128px;
-  height: 128px;
-  margin: 0 auto 22px;
+    position: relative;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 22px;
 }
 
 .avatar-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--gold-1),
-    var(--gold-2),
-    var(--gold-1)
-  );
-  animation: rotate 6s linear infinite;
-  filter: blur(0.5px);
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        var(--gold-1),
+        var(--gold-2),
+        var(--gold-3),
+        var(--gold-1)
+    );
+    animation: spin 8s linear infinite;
+    filter: blur(0.5px);
 }
 
 .avatar {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #050505;
-  background: #111;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #050505;
+    background: #111;
 }
 
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-/* Текст */
 h1 {
-  text-align: center;
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    var(--gold-1),
-    var(--gold-2),
-    #fff
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
+    font-size: 34px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, #fff, var(--gold-1), var(--gold-3), #fff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
 }
 
 @keyframes shine {
-  to {
-    background-position: 200% center;
-  }
+    to {
+        background-position: 200% center;
+    }
+}
+
+.username,
+.status,
+.bio {
+    text-align: center;
 }
 
 .username {
-  text-align: center;
-  font-size: 15px;
-  color: var(--text-muted);
-  margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 8px;
 }
 
 .status {
-  text-align: center;
-  font-family: monospace;
-  color: #ffb700;
-  font-size: 13px;
-  margin-bottom: 28px;
-  opacity: 0.9;
+    color: var(--gold-2);
+    font-family: monospace;
+    font-size: 13px;
+    margin-bottom: 14px;
+    opacity: 0.9;
 }
 
-/* Кнопки */
+.bio {
+    color: #d6d6d6;
+    line-height: 1.6;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
 .links {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  padding: 16px 20px;
-  border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 183, 0, 0.14),
-    rgba(255, 216, 107, 0.06)
-  );
-  border: 1px solid rgba(255, 215, 100, 0.16);
-  transition: 0.35s ease;
-  overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg,
+        rgba(255, 177, 0, 0.12),
+        rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 215, 90, 0.12);
+    transition: 0.35s ease;
+    overflow: hidden;
 }
 
 .link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.12),
-    transparent
-  );
-  transform: translateX(-100%);
-  transition: 0.6s;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.08),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: 0.7s;
 }
 
 .link:hover::before {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 
 .link:hover {
-  transform: translateY(-3px) scale(1.01);
-  border-color: rgba(255, 215, 100, 0.4);
-  box-shadow: 0 10px 30px rgba(255, 183, 0, 0.14);
+    transform: translateY(-3px) scale(1.015);
+    border-color: rgba(255, 215, 90, 0.35);
+    box-shadow: 0 12px 30px rgba(255, 177, 0, 0.12);
 }
 
 .link i {
-  font-size: 18px;
-  color: var(--gold-1);
+    color: var(--gold-2);
+    font-size: 18px;
 }
 
-/* Footer */
 .footer {
-  margin-top: 26px;
-  text-align: center;
-  font-size: 12px;
-  color: #888;
+    margin-top: 24px;
+    text-align: center;
+    color: #7f7f7f;
+    font-size: 12px;
 }
 
-/* Адаптив */
 @media (max-width: 480px) {
-  .card {
-    padding: 36px 22px 24px;
-    border-radius: 26px;
-  }
+    .card {
+        padding: 36px 22px 24px;
+        border-radius: 28px;
+    }
 
-  h1 {
-    font-size: 28px;
-  }
+    h1 {
+        font-size: 28px;
+    }
 
-  .avatar-wrap {
-    width: 110px;
-    height: 110px;
-  }
-
-  .link {
-    font-size: 14px;
-    padding: 15px 18px;
-  }
+    .avatar-wrap {
+        width: 112px;
+        height: 112px;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- Частицы -->
-<div class="particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
+<div class="particles" id="particles"></div>
 
-<!-- Карточка -->
 <div class="card">
-  <div class="avatar-wrap">
-    <!-- Замените avatar.jpg на свой файл -->
-    <img src="avatar.jpg" alt="Quake Avatar" class="avatar">
-  </div>
+    <div class="avatar-wrap">
+        <!-- Положи рядом с HTML файл avatar.jpg -->
+        <img src="avatar.jpg" alt="Quake" class="avatar">
+    </div>
 
-  <h1>Quake</h1>
-  <div class="username">@qexoa</div>
-  <div class="status">root@quake:~$ whoami</div>
+    <h1>Quake</h1>
+    <div class="username">@qexoa</div>
+    <div class="status">root@quake:~$ whoami</div>
 
-  <div class="links">
-    <a href="https://t.me/qexoa" target="_blank" class="link">
-      <i class="fab fa-telegram-plane"></i>
-      <span>Написать мне</span>
-    </a>
+    <div class="bio">
+        Developer • Designer • Creator
+    </div>
 
-    <a href="https://t.me/savdit" target="_blank" class="link">
-      <i class="fas fa-bullhorn"></i>
-      <span>Telegram-канал</span>
-    </a>
+    <div class="links">
+        <a href="https://t.me/qexoa" target="_blank" class="link">
+            <i class="fab fa-telegram-plane"></i>
+            <span>Написать мне</span>
+        </a>
 
-    <a href="https://t.me/anonaskbot?start=71dl7k8" target="_blank" class="link">
-      <i class="fas fa-user-secret"></i>
-      <span>Анонимные сообщения</span>
-    </a>
-  </div>
+        <a href="https://t.me/savdit" target="_blank" class="link">
+            <i class="fas fa-bullhorn"></i>
+            <span>Telegram-канал</span>
+        </a>
 
-  <div class="footer">
-    © 2026 Quake
-  </div>
+        <a href="https://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link">
+            <i class="fas fa-user-secret"></i>
+            <span>Анонимные сообщения</span>
+        </a>
+    </div>
+
+    <div class="footer">© 2026 Quake</div>
 </div>
+
+<script>
+// Генерация частиц
+const particles = document.getElementById('particles');
+
+for (let i = 0; i < 35; i++) {
+    const p = document.createElement('span');
+
+    p.style.left = Math.random() * 100 + '%';
+    p.style.bottom = '-10px';
+    p.style.animationDuration = (10 + Math.random() * 15) + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    p.style.opacity = Math.random() * 0.6;
+
+    const size = Math.random() * 2 + 1;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+
+    particles.appendChild(p);
+}
+</script>
 
 </body>
 </html>
