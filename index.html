@@ -4,36 +4,23 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Quake | Bio</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
 :root {
-    --bg: #140d08;
-    --card: rgba(18, 10, 6, 0.78);
-    --border: rgba(255, 178, 102, 0.18);
-    --gold-1: #ffe6c7;
-    --gold-2: #ffb77a;
-    --gold-3: #ff8f5a;
+    --bg: #050508;
+    --card: rgba(12, 12, 20, 0.7);
+    --accent: #6366f1;
+    --neon-blue: #3b82f6;
     --text: #ffffff;
-    --muted: #d4c3b7;
+    --muted: #94a3b8;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Inter', sans-serif;
-    background:
-        radial-gradient(circle at 15% 20%, rgba(255, 177, 0, 0.08), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(255, 207, 77, 0.06), transparent 30%),
-        radial-gradient(circle at 50% 50%, #0f0f0f, #030303 70%);
+    background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #050508 80%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -43,332 +30,99 @@ body {
     color: var(--text);
 }
 
-/* Плавающие световые пятна */
-body::before,
-body::after {
+/* Эффект свечения */
+body::before {
     content: "";
     position: fixed;
-    width: 45vw;
-    height: 45vw;
+    width: 600px;
+    height: 600px;
+    background: rgba(99, 102, 241, 0.15);
+    filter: blur(150px);
     border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.08;
     z-index: 0;
-    animation: drift 20s ease-in-out infinite alternate;
-}
-
-body::before {
-    background: #ffb100;
-    top: -10%;
-    left: -10%;
-}
-
-body::after {
-    background: #ffd54a;
-    right: -10%;
-    bottom: -10%;
-    animation-delay: 4s;
-}
-
-@keyframes drift {
-    from {
-        transform: translate(0, 0) scale(1);
-    }
-    to {
-        transform: translate(60px, -40px) scale(1.15);
-    }
-}
-
-/* Мелкие частицы */
-.particles {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.particles span {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: rgba(255, 215, 90, 0.45);
-    box-shadow: 0 0 8px rgba(255, 215, 90, 0.4);
-    animation: rise linear infinite;
-}
-
-@keyframes rise {
-    from {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    15% {
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
 }
 
 .card {
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 430px;
-    padding: 42px 30px 30px;
-    border-radius: 34px;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 30px;
     background: var(--card);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    border: 1px solid var(--border);
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.85),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg,
-        rgba(255, 233, 163, 0.45),
-        rgba(255, 177, 0, 0.06),
-        rgba(255, 233, 163, 0.2));
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .avatar-wrap {
-    position: relative;
-    width: 128px;
-    height: 128px;
-    margin: 0 auto 22px;
-}
-
-.avatar-wrap::before {
-    content: "";
-    position: absolute;
-    inset: -5px;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    padding: 4px;
     border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        var(--gold-1),
-        var(--gold-2),
-        var(--gold-3),
-        var(--gold-1)
-    );
-    animation: spin 8s linear infinite;
-    filter: blur(0.5px);
+    background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+    position: relative;
 }
 
 .avatar {
-    position: relative;
-    z-index: 1;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #050505;
-    background: #111;
+    background: var(--bg);
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
+h1 { font-size: 30px; text-align: center; margin-bottom: 5px; }
+.username { color: var(--accent); text-align: center; font-weight: 600; margin-bottom: 5px; }
+.status { color: var(--muted); text-align: center; font-size: 13px; margin-bottom: 25px; }
 
-h1 {
-    font-size: 34px;
-    font-weight: 800;
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-    background: linear-gradient(90deg, #fff, var(--gold-1), var(--gold-3), #fff);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 4s linear infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.username,
-.status,
-.bio {
-    text-align: center;
-}
-
-.username {
-    color: var(--muted);
-    font-size: 15px;
-    margin-bottom: 8px;
-}
-
-.status {
-    color: var(--gold-2);
-    font-family: monospace;
-    font-size: 13px;
-    margin-bottom: 14px;
-    opacity: 0.9;
-}
-
-.bio {
-    color: #d6d6d6;
-    line-height: 1.6;
-    font-size: 14px;
-    margin-bottom: 28px;
-}
-
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
+.links { display: flex; flex-direction: column; gap: 12px; }
 
 .link {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    text-decoration: none;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
     color: white;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 16px 20px;
-    border-radius: 16px;
-    background: linear-gradient(135deg,
-        rgba(255, 177, 0, 0.12),
-        rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(255, 215, 90, 0.12);
-    transition: 0.35s ease;
-    overflow: hidden;
-}
-
-.link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.08),
-        transparent
-    );
-    transform: translateX(-100%);
-    transition: 0.7s;
-}
-
-.link:hover::before {
-    transform: translateX(100%);
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 500;
 }
 
 .link:hover {
-    transform: translateY(-3px) scale(1.015);
-    border-color: rgba(255, 215, 90, 0.35);
-    box-shadow: 0 12px 30px rgba(255, 177, 0, 0.12);
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
 }
 
-.link i {
-    color: var(--gold-2);
-    font-size: 18px;
-}
+.link i { margin-right: 15px; font-size: 18px; }
 
-.footer {
-    margin-top: 24px;
-    text-align: center;
-    color: #7f7f7f;
-    font-size: 12px;
-}
-
-@media (max-width: 480px) {
-    .card {
-        padding: 36px 22px 24px;
-        border-radius: 28px;
-    }
-
-    h1 {
-        font-size: 28px;
-    }
-
-    .avatar-wrap {
-        width: 112px;
-        height: 112px;
-    }
-}
+.footer { margin-top: 30px; text-align: center; color: #475569; font-size: 11px; }
 </style>
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
-
 <div class="card">
     <div class="avatar-wrap">
-        <!-- Положи рядом с HTML файл avatar.jpg -->
         <img src="avatar.jpg" alt="Quake" class="avatar">
     </div>
 
     <h1>Quake</h1>
     <div class="username">@qexoa</div>
-    <div class="status">ruthincite</div>
-
-    <div class="bio">
-        Developer • Designer • Creator
-    </div>
+    <div class="status">developer / designer</div>
 
     <div class="links">
-        <a href="https://t.me/qexoa" target="_blank" class="link">
-            <i class="fab fa-telegram-plane"></i>
-            <span>Написать мне</span>
-        </a>
-
-        <a href="https://t.me/savdit" target="_blank" class="link">
-            <i class="fas fa-bullhorn"></i>
-            <span>Telegram-канал</span>
-        </a>
-
-        <a href="https://t.me/anonaskbot?start=wrebqmw" target="_blank" class="link">
-            <i class="fas fa-user-secret"></i>
-            <span>Анонимные сообщения</span>
-        </a>
+        <a href="https://t.me/qexoa" class="link"><i class="fab fa-telegram"></i> Telegram</a>
+        <a href="https://t.me/savdit" class="link"><i class="fas fa-bullhorn"></i> Channel</a>
+        <a href="https://discord.com/users/qexoa" class="link"><i class="fab fa-discord"></i> Discord: qexoa</a>
+        <a href="https://t.me/anonaskbot?start=wrebqmw" class="link"><i class="fas fa-envelope"></i> Anonymous Ask</a>
     </div>
 
     <div class="footer">© 2026 Quake</div>
 </div>
-
-<script>
-// Генерация частиц
-const particles = document.getElementById('particles');
-
-for (let i = 0; i < 35; i++) {
-    const p = document.createElement('span');
-
-    p.style.left = Math.random() * 100 + '%';
-    p.style.bottom = '-10px';
-    p.style.animationDuration = (10 + Math.random() * 15) + 's';
-    p.style.animationDelay = Math.random() * 10 + 's';
-    p.style.opacity = Math.random() * 0.6;
-
-    const size = Math.random() * 2 + 1;
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
-
-    particles.appendChild(p);
-}
-</script>
 
 </body>
 </html>
